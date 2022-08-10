@@ -62,7 +62,7 @@ const Home: NextPage = () => {
           {articles.map((article, index) => {
             return (
               <div key={index}>
-                <Link href={{pathname:"/article", query: {id: article.id}}}><div className="text-sky-500 dark:text-sky-400">{article.title}</div></Link>
+                <Link href={{pathname:`/article/${article.id}`, query: {id: article.id}}}><div className="text-sky-500 dark:text-sky-400">{article.title}</div></Link>
                 <div className="text-orange-500 dark:text-orange-400">{article.author}</div>
                 <div>{article.content}</div>
                 <br></br>
