@@ -23,28 +23,57 @@ class Review{
 
 const fetcher = (url: string) => fetch(url).then(r => r.json()).catch(err => console.log(err));
 
-const Home: NextPage = () => {
+function ListArticles() {
   // const [articles, setArticles] = useState<Article[]>([]);
-  const {data, error} = useSWR('http://localhost:3000/articles', fetcher);
-  // if (error) return <div>failed to load</div>;
-  // if (!data) return <div>loading...</div>;
-  return(
-  <>
-    {data?.map((article: Article) => {
-      return(
+  const { data, error } = useSWR('http://localhost:3000/articles', fetcher);
+  return (
+    <div>
+      {data?.map((article: Article) => (
         <div key={article.id}>
-          <h1>{article.title}</h1>
-          <p>{article.content}</p>
-          <p>{article.author}</p>
-          <p>{article.createdAt}</p>
-          <p>{article.updatedAt}</p>
-          <p>{article.userId}</p>
-          <br></br>
+          <Link href={{pathname: `/articles/${article.id}`}}>
+            <div>
+              <div>{article.title}</div>
+              <div>{article.author}</div>
+              <div>{article.content}</div>
+            </div>
+          </Link>
+
+            {/* <div>{article.content}</div> */}
+        <br></br>
         </div>
-      )
-    })}
-  </>
+      ))}
+    </div>
+  );
+}
+
+const Home: NextPage = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
+
+  return (
+    <>
+      <ListArticles />
+    </>
   )
+  // const {data, error} = useSWR('http://localhost:3000/articles', fetcher);
+  // // if (error) return <div>failed to load</div>;
+  // // if (!data) return <div>loading...</div>;
+  // return(
+  // <>
+  //   {data?.map((article: Article) => {
+  //     return(
+  //       <div key={article.id}>
+  //         <h1>{article.title}</h1>
+  //         <p>{article.content}</p>
+  //         <p>{article.author}</p>
+  //         <p>{article.createdAt}</p>
+  //         <p>{article.updatedAt}</p>
+  //         <p>{article.userId}</p>
+  //         <br></br>
+  //       </div>
+  //     )
+  //   })}
+  // </>
+  // )
 
   const [loginName, setLoginName] = useState<string>("鴎外");
 

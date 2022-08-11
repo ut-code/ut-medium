@@ -1,15 +1,18 @@
 import type { NextPage } from 'next';
 // import styles from '../styles/Home.module.css'
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import useSWR from 'swr';
 
-const fetcher = (url: string) => fetch(url).then(r => r.json());
 
 class Article{
   id: number=0;
   title: string = "";
   author: string = "";
   content: string = "";
+  createdAt: string = "";
+  updatedAt: string = "";
+  userId: string = "";
   // avatar: ??? = ???;
 }
 class Review{
@@ -19,6 +22,25 @@ class Review{
   // avatar: ??? = ???;
 }
 
+
+const fetcher = (url: string) => fetch(url).then(r => r.json()).catch(err => console.log(err));
+
+function ListArticle(props: {id: number}) {
+  const { data, error } = useSWR(`http://localhost:3000/articles/${props.id}`, fetcher);
+  return (
+    <div>
+      <div key={data?.id}>
+          <div>
+            <div>{data?.title}</div>
+            <div>{data?.author}</div>
+            <div>{data?.content}</div>
+          </div>
+      <br></br>
+      </div>
+    </div>
+  );
+}
+
 const Home: NextPage = () => {
 
   const [article, setArticle] = useState<Article>();
@@ -26,19 +48,6 @@ const Home: NextPage = () => {
   const router = useRouter()
   const { id } = router.query;
 
-  useEffect(() => {
-  if (typeof id === "string"){
-    async function fetchData(): Promise<void> {
-      try {const { post } = await fetch(`http://localhost:3000/articles/${id}`).then(res => res.json()).catch(err => console.log(err));
-        setArticle(post);} catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
-  } else {
-    console.log("id is not a string");
-  }
-  }, []);
 
   // const [reviews, setReviews] = useState<Review[]>([
   //   {
@@ -56,7 +65,13 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <div>
+      {typeof id === "string" && <ListArticle id={parseInt(id)} />}
+      <div>hello</div>
+      {/* <div>{article?.id}</div>
+      <div>{article?.title}</div>
+      <div>{article?.author}</div>
+      <div>{article?.content}</div> */}
+      {/* <div>
         <div
           // control={
           //   <div
@@ -71,8 +86,8 @@ const Home: NextPage = () => {
           //   />
           // }
           label="ログイン(テスト用)"
-        />
-        <div
+        /> */}
+        {/* <div
           value={loginName}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setLoginName(event.target.value);
@@ -108,7 +123,7 @@ const Home: NextPage = () => {
             <div>
               {article?.content}
             </div>
-          </div>
+          </div> */}
 {/*
           <div container spacing={2} alignItems="center">
             <div item>
@@ -154,8 +169,8 @@ const Home: NextPage = () => {
               {/* </div>
             </div>
           ))} */}
-        </div>
-      </div>
+        {/* </div>
+      </div> */}
     </div>
   )
 }
