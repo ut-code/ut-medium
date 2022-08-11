@@ -31,12 +31,12 @@ class Article{
 }
 
 app.get('/', async (req: express.Request, res: express.Response) => {
-  let posts = await client.post.findFirst()
+  let posts = await client.post.findMany()
   res.send(posts)
 })
 
 app.get('/articles', async (req: express.Request, res: express.Response) => {
-  let posts = await client.post.findFirst()
+  let posts = await client.post.findMany()
   res.send(posts)
 })
 
