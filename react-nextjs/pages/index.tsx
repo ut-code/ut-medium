@@ -34,10 +34,9 @@ function ListArticles() {
             <div>
               <div>{article.title}</div>
               <div>{article.author}</div>
-              <div>{article.content}</div>
+              {/* <div>{article.content}</div> */}
             </div>
           </Link>
-
             {/* <div>{article.content}</div> */}
         <br></br>
         </div>
@@ -46,12 +45,38 @@ function ListArticles() {
   );
 }
 
+
 const Home: NextPage = () => {
   const [articles, setArticles] = useState<Article[]>([]);
+
+
+const ContactForm = (
+  <form
+    name="contact-form"
+    method="POST"
+    action="contact/?success=true"
+  >
+    <label htmlFor="name">Name *</label>
+    <input
+      id="name"
+      name="name"
+      required
+      type="text"
+    />
+    {/* <label htmlFor="company">Company *</label> */}
+    {/* <input id="company" name="company" required type="text" /> */}
+    <label htmlFor="email">E-mail Address *</label>
+    <input id="email" type="email" name="email" required />
+    <label htmlFor="message">Message *</label>
+    <textarea id="message" name="message" required></textarea>
+    <button type="submit">Submit</button>
+  </form>
+);
 
   return (
     <>
       <ListArticles />
+			{ContactForm}
     </>
   )
   // const {data, error} = useSWR('http://localhost:3000/articles', fetcher);

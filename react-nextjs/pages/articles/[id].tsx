@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 // import styles from '../styles/Home.module.css'
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import useSWR from 'swr';
-
 
 class Article{
   id: number=0;
@@ -32,7 +32,9 @@ function ListArticle(props: {id: number}) {
       <div key={data?.id}>
           <div>
             <div>{data?.title}</div>
+            <br></br>
             <div>{data?.author}</div>
+            <br></br>
             <div>{data?.content}</div>
           </div>
       <br></br>
@@ -65,8 +67,13 @@ const Home: NextPage = () => {
 
   return (
     <div>
+      <Link href={{pathname: `/`}}>
+        <div>トップへ戻る
+        </div>
+    </Link>
+    <br></br>
+
       {typeof id === "string" && <ListArticle id={parseInt(id)} />}
-      <div>hello</div>
       {/* <div>{article?.id}</div>
       <div>{article?.title}</div>
       <div>{article?.author}</div>
