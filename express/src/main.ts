@@ -114,5 +114,5 @@ app.post('/v1/create/article', async (req: express.Request, res: express.Respons
 			classification: classification,
 		}
 	})
-	res.redirect('http://localhost:8080')
+	res.redirect('http://localhost:3000')
 })

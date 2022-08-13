@@ -40,9 +40,9 @@ function ListArticles(props: {classification: string}) {
   // const [articles, setArticles] = useState<Article[]>([]);
 	let url: string;
 	if (props.classification === "all") {
-		url = "http://localhost:3000/v1/articles";
+		url = "http://localhost:3001/v1/articles";
 	} else {
-		url = `http://localhost:3000/v1/articles/classification/?classification={props.classification}`;
+		url = `http://localhost:3001/v1/articles/classification/?classification={props.classification}`;
 	}
 
   const { data, error } = useSWR(url, fetcher);
