@@ -31,43 +31,66 @@ app.listen(PORT, () => {
 })
 
 
-class Article{
-  id: number=0;
-  title: string = "";
-  author: string = "";
-  content: string = "";
-  // avatar: ??? = ???;
-}
+// class Article{
+//   title: string = "";
+//   author: string = "";
+//   content: string = "";
+//   // avatar: ??? = ???;
+// }
 
 app.get('/v1', async (req: express.Request, res: express.Response) => {
   let posts = await client.post.findMany()
   res.send(posts)
 })
 
-app.get('/v1/articles', async (req: express.Request, res: express.Response) => {
-  let posts = await client.post.findMany()
-  res.send(posts)
-})
+// app.get('/v1/articles', async (req: express.Request, res: express.Response) => {
+//   let posts = await client.post.findMany()
+//   res.send(posts)
+// })
 
-
-app.get('/v1/articles/:id', async (req: express.Request, res: express.Response) => {
-  const {id} = req.params;
-	if (typeof id === 'string') {
-		let post: Article | null = await client.post.findUnique({
+app.get('/v1/articles', async(req: express.Request, res: express.Response) => {
+	if (req.params.id === "string") {
+		const posts = await client.post.findMany({
 			where: {
-				id: parseInt(id, 10)
+				id: parseInt(req.params.id),
 			}
 		})
-		res.send(post)
+		res.send(posts)
+		return
+	} else if (req.params.classification === "string") {
+		const posts = await client.post.findMany({
+			where: {
+				classification: req.params.classification,
+			}
+	})
+		res.send(posts)
+		return
 	} else {
-		res.send("error")
+		const posts = await client.post.findMany()
+		res.send(posts)
+		return
 	}
 })
+
+
+// app.get('/v1/articles/:id', async (req: express.Request, res: express.Response) => {
+//   const {id} = req.params;
+// 	if (typeof id === 'string') {
+// 		let post: Article | null = await client.post.findUnique({
+// 			where: {
+// 				id: parseInt(id, 10)
+// 			}
+// 		})
+// 		res.send(post)
+// 	} else {
+// 		res.send("error")
+// 	}
+// })
 
 app.get('/v1/create/delete/:id', async(req: express.Request, res: express.Response) => {
 	const {id} = req.params;
 	if (typeof id === 'string') {
-		let post: Article | null = await client.post.delete({
+		let post = await client.post.delete({
 			where: {
 				id: parseInt(id, 10)
 			}
@@ -81,13 +104,14 @@ app.get('/v1/create/delete/:id', async(req: express.Request, res: express.Respon
 
 
 app.post('/v1/create/article', async (req: express.Request, res: express.Response) => {
-	const {title, author, email, content} = req.body;
+	const {title, author, email, content, classification} = req.body;
 	let post = await client.post.create({
 		data: {
 			title: title,
 			author: author,
 			// email,
 			content: content,
+			classification: classification,
 		}
 	})
 	res.redirect('http://localhost:8080')

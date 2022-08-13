@@ -4,15 +4,28 @@ import Link from 'next/link';
 import { useState } from 'react';
 import useSWR from 'swr';
 
-class Article {
-  id: number;
-  title: string = "";
-  author: string = "";
-  content: string = "";
-  createdAt: string = "";
-  updatedAt: string = "";
-  userId: string = "";
-};
+// class Article {
+// 	id: number;
+//   title: string = "";
+//   author: string = "";
+//   content: string = "";
+//   createdAt: string = "";
+//   updatedAt: string = "";
+//   userId: string = "";
+// };
+
+interface Article {
+	id: number;
+	title: string;
+	author: string;
+	content: string;
+	createdAt: string;
+	updatedAt: string;
+	userId: string;
+	classification: string;
+}
+
+
 
 class Review{
   author: string = "";
@@ -23,10 +36,18 @@ class Review{
 
 const fetcher = (url: string) => fetch(url).then(r => r.json()).catch(err => console.log(err));
 
-function ListArticles() {
+function ListArticles(props: {classification: string}) {
   // const [articles, setArticles] = useState<Article[]>([]);
-  const { data, error } = useSWR('http://localhost:3000/v1/articles', fetcher);
-  return (
+	let url: string;
+	if (props.classification === "all") {
+		url = "http://localhost:3000/v1/articles";
+	} else {
+		url = `http://localhost:3000/v1/articles/classification/?classification={props.classification}`;
+	}
+
+  const { data, error } = useSWR(url, fetcher);
+
+	return (
     <div>
       {data?.map((article: Article) => (
         <div key={article.id}>
@@ -34,11 +55,8 @@ function ListArticles() {
             <div>
               <div className="underline"><a>{article.title}</a></div>
               <div>{article.author}</div>
-              {/* <div>{article.content}</div> */}
             </div>
-          </Link>
-            {/* <div>{article.content}</div> */}
-        <br></br>
+          </Link><br/>
         </div>
       ))}
     </div>
@@ -48,11 +66,22 @@ function ListArticles() {
 
 const Home: NextPage = () => {
   const [articles, setArticles] = useState<Article[]>([]);
-
+	const [classification, setClassification] = useState<string>("all");
 
   return (
     <>
-      <ListArticles />
+      <div className="grid grid-cols-7 divide-x">
+				<div><button onClick={() => {setClassification("all")}}>主要</button></div>
+				<div><button onClick={() => {setClassification("national")}}>国内</button></div>
+				<div><button onClick={() => {setClassification("international")}}>国際</button></div>
+				<div><button onClick={() => {setClassification("economics")}}>経済</button></div>
+				<div><button onClick={() => {setClassification("information")}}>情報</button></div>
+				<div><button onClick={() => {setClassification("science")}}>科学</button></div>
+				<div><button onClick={() => {setClassification("sports")}}>スポーツ</button></div>
+			</div>
+			<br/>
+
+      <ListArticles classification={classification} />
 
       <Link href={{pathname: '/create/article'}}>
         <a>Create Article</a>
@@ -62,41 +91,6 @@ const Home: NextPage = () => {
 				<a>Create Review</a>
 			</Link> */}
     </>
-  )
-
-  const [loginName, setLoginName] = useState<string>("鴎外");
-
-  return (
-    <div>
-      <div>
-        <div>ut medium</div>
-        <div>logged in as {loginName}</div>
-
-        <div>
-          <div>学内</div>
-          <div><div>主要</div><div>国内</div><div>国際</div><div>経済</div><div>情報</div><div>サークル</div><div>研究</div></div>
-        </div>
-
-        <div>
-        <div>学外</div>
-          <div><div>主要</div><div>国内</div><div>国際</div><div>経済</div><div>情報</div><div>エンタメ</div><div>科学</div></div>
-        </div>
-
-        <div className="">
-          <div>学内 主要</div>
-          {articles.map((article: Article, index: number) => {
-            return (
-              <div key={index}>
-                <Link href={{pathname:`/articles/${article.id}`}}><div className="text-sky-500 dark:text-sky-400">{article.title}</div></Link>
-                <div className="text-orange-500 dark:text-orange-400">{article.author}</div>
-                <div>{article.content}</div>
-                <br></br>
-              </div>
-            )
-          })}
-        </div>
-      </div>
-    </div>
   )
 }
 

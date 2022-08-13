@@ -21,12 +21,26 @@ model User {
 }
 
 model Post {
-  id        Int      @id @unique @default(autoincrement())
-  title     String
-  author    String
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    Int?
+  id             Int      @id @unique @default(autoincrement())
+  title          String
+  author         String
+  content        String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  User           User?    @relation(fields: [userId], references: [id])
+  userId         Int?
+  classification String   @default("all")
 }
+
+// const [reviews, setReviews] = useState<Review[]>([
+//   {
+//     author: "龍之介",
+//     nameDisplay: true,
+//     content: "2行目の「郊外のぎらぎらひかる草の波」の出典を明記してください"
+//   },
+//   {
+//     author: "諭吉",
+//     nameDisplay: false,
+//     content: "「イーハトーヴォ」が分からないので説明してください。"
+//   }
+// ]);
