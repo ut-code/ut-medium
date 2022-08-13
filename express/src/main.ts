@@ -4,6 +4,15 @@ import express from 'express';
 
 const client = new PrismaClient();
 
+// class Article {
+//   id: number;
+//   title: string = "";
+//   author: string = "";
+//   content: string = "";
+//   createdAt: string = "";
+//   updatedAt: string = "";
+//   userId: string = "";
+// };
 
 if (!process.env.PORT) {
   process.exit(1)
@@ -30,29 +39,56 @@ class Article{
   // avatar: ??? = ???;
 }
 
-app.get('/', async (req: express.Request, res: express.Response) => {
+app.get('/v1', async (req: express.Request, res: express.Response) => {
   let posts = await client.post.findMany()
   res.send(posts)
 })
 
-app.get('/articles', async (req: express.Request, res: express.Response) => {
+app.get('/v1/articles', async (req: express.Request, res: express.Response) => {
   let posts = await client.post.findMany()
   res.send(posts)
 })
 
 
-app.get('/articles/:id', async (req: express.Request, res: express.Response) => {
+app.get('/v1/articles/:id', async (req: express.Request, res: express.Response) => {
   const {id} = req.params;
-    console.log(id)
-    console.log(typeof id)
-    if (typeof id === 'string') {
-      let post: Article | null = await client.post.findUnique({
-        where: {
-          id: parseInt(id, 10)
-        }
-      })
-      res.send(post)
-    } else {
-      res.send("error")
-    }
+	if (typeof id === 'string') {
+		let post: Article | null = await client.post.findUnique({
+			where: {
+				id: parseInt(id, 10)
+			}
+		})
+		res.send(post)
+	} else {
+		res.send("error")
+	}
+})
+
+app.get('/v1/create/delete/:id', async(req: express.Request, res: express.Response) => {
+	const {id} = req.params;
+	if (typeof id === 'string') {
+		let post: Article | null = await client.post.delete({
+			where: {
+				id: parseInt(id, 10)
+			}
+		})
+	res.send(`${post} delete successfully`)}
+	else {
+		res.send("error")
+	}
+})
+
+
+
+app.post('/v1/create/article', async (req: express.Request, res: express.Response) => {
+	const {title, author, email, content} = req.body;
+	let post = await client.post.create({
+		data: {
+			title: title,
+			author: author,
+			// email,
+			content: content,
+		}
+	})
+	res.redirect('http://localhost:8080')
 })
