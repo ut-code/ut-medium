@@ -20,7 +20,7 @@ async function main() {
   })
 	  await client.post.create({
       data: {
-   title: "The Law of Return and the Right of Return",
+    title: "The Law of Return and the Right of Return",
     author: "Michael Sandel",
     content: "What it means to be free is to recognize certain moral ties we haven't chosen, ties bound up with history, membership, memory, then it's hard to separate the idea of obligations that point inward sometimes in and sometimes outward."
  }

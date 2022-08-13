@@ -25,14 +25,14 @@ const fetcher = (url: string) => fetch(url).then(r => r.json()).catch(err => con
 
 function ListArticles() {
   // const [articles, setArticles] = useState<Article[]>([]);
-  const { data, error } = useSWR('http://localhost:3000/articles', fetcher);
+  const { data, error } = useSWR('http://localhost:3000/v1/articles', fetcher);
   return (
     <div>
       {data?.map((article: Article) => (
         <div key={article.id}>
           <Link href={{pathname: `/articles/${article.id}`}}>
             <div>
-              <div>{article.title}</div>
+              <div className="underline"><a>{article.title}</a></div>
               <div>{article.author}</div>
               {/* <div>{article.content}</div> */}
             </div>
@@ -50,55 +50,19 @@ const Home: NextPage = () => {
   const [articles, setArticles] = useState<Article[]>([]);
 
 
-const ContactForm = (
-  <form
-    name="contact-form"
-    method="POST"
-    action="contact/?success=true"
-  >
-    <label htmlFor="name">Name *</label>
-    <input
-      id="name"
-      name="name"
-      required
-      type="text"
-    />
-    {/* <label htmlFor="company">Company *</label> */}
-    {/* <input id="company" name="company" required type="text" /> */}
-    <label htmlFor="email">E-mail Address *</label>
-    <input id="email" type="email" name="email" required />
-    <label htmlFor="message">Message *</label>
-    <textarea id="message" name="message" required></textarea>
-    <button type="submit">Submit</button>
-  </form>
-);
-
   return (
     <>
       <ListArticles />
-			{ContactForm}
+
+      <Link href={{pathname: '/create/article'}}>
+        <a>Create Article</a>
+      </Link>
+
+			{/* <Link href={{pathname: '/create/review'}}>
+				<a>Create Review</a>
+			</Link> */}
     </>
   )
-  // const {data, error} = useSWR('http://localhost:3000/articles', fetcher);
-  // // if (error) return <div>failed to load</div>;
-  // // if (!data) return <div>loading...</div>;
-  // return(
-  // <>
-  //   {data?.map((article: Article) => {
-  //     return(
-  //       <div key={article.id}>
-  //         <h1>{article.title}</h1>
-  //         <p>{article.content}</p>
-  //         <p>{article.author}</p>
-  //         <p>{article.createdAt}</p>
-  //         <p>{article.updatedAt}</p>
-  //         <p>{article.userId}</p>
-  //         <br></br>
-  //       </div>
-  //     )
-  //   })}
-  // </>
-  // )
 
   const [loginName, setLoginName] = useState<string>("鴎外");
 

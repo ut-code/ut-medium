@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 // import styles from '../styles/Home.module.css'
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import useSWR from 'swr';
+import ReturnTop from '../../components/returnTop';
 
 class Article{
   id: number=0;
@@ -26,7 +26,7 @@ class Review{
 const fetcher = (url: string) => fetch(url).then(r => r.json()).catch(err => console.log(err));
 
 function ListArticle(props: {id: number}) {
-  const { data, error } = useSWR(`http://localhost:3000/articles/${props.id}`, fetcher);
+  const { data, error } = useSWR(`http://localhost:3000/v1/articles/${props.id}`, fetcher);
   return (
     <div>
       <div key={data?.id}>
@@ -43,12 +43,18 @@ function ListArticle(props: {id: number}) {
   );
 }
 
+
+async function deletePost(props: {id: string}) {
+	await fetch(`http://localhost:3000/v1/create/delete/${props.id}`)
+}
+
 const Home: NextPage = () => {
 
   const [article, setArticle] = useState<Article>();
 
   const router = useRouter()
   const { id } = router.query;
+
 
 
   // const [reviews, setReviews] = useState<Review[]>([
@@ -65,13 +71,16 @@ const Home: NextPage = () => {
   // ]);
    const [loginName, setLoginName] = useState<string>("鴎外");
 
+	 const handleClick = async (id: string) => {
+		await deletePost({id: id})
+		router.push('/')
+	}
+
   return (
     <div>
-      <Link href={{pathname: `/`}}>
-        <div>トップへ戻る
-        </div>
-    </Link>
-    <br></br>
+			<ReturnTop />
+
+     <br/>
 
       {typeof id === "string" && <ListArticle id={parseInt(id)} />}
       {/* <div>{article?.id}</div>
@@ -178,6 +187,8 @@ const Home: NextPage = () => {
           ))} */}
         {/* </div>
       </div> */}
+
+			{typeof id === "string" && <button onClick={() => {handleClick(id)}}><a>id: {id}を削除</a></button>}
     </div>
   )
 }
