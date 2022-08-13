@@ -28,7 +28,7 @@ const ContactForm = (
   <form
     name="contact-form"
     method="POST"
-    action="http://localhost:3000/v1/create/article"
+    action="http://localhost:3001/v1/create/article"
   >
 
     <label htmlFor="name">author</label>
@@ -47,7 +47,7 @@ const ContactForm = (
 		<label htmlFor="email">email</label>
     <input id="email" type="email" name="email" required /><br/>
 
-		<label htmlFor="classification">classification</label>
+		<label>classification</label>
 		<select id="classification" name="classification" required>
 			<option value="all">all</option>
 			<option value="national">national</option>

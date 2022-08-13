@@ -36,7 +36,7 @@ class Review{
 const fetcher = (url: string) => fetch(url).then(r => r.json()).catch(err => console.log(err));
 
 function ListArticle(props: {id: number}) {
-  const { data, error } = useSWR(`http://localhost:3000/v1/articles/${props.id}`, fetcher);
+  const { data, error } = useSWR(`http://localhost:3001/v1/articles/${props.id}`, fetcher);
   return (
     <div>
       <div key={data?.id}>
@@ -60,7 +60,7 @@ function ListArticle(props: {id: number}) {
 
 
 async function deletePost(props: {id: string}) {
-	await fetch(`http://localhost:3000/v1/create/delete/${props.id}`)
+	await fetch(`http://localhost:3001/v1/create/delete/${props.id}`)
 }
 
 const Home: React.FunctionComponent = () => {
