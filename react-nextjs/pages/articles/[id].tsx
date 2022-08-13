@@ -1,19 +1,29 @@
-import type { NextPage } from 'next';
 // import styles from '../styles/Home.module.css'
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import useSWR from 'swr';
 import ReturnTop from '../../components/returnTop';
 
-class Article{
-  id: number=0;
-  title: string = "";
-  author: string = "";
-  content: string = "";
-  createdAt: string = "";
-  updatedAt: string = "";
-  userId: string = "";
-  // avatar: ??? = ???;
+// class Article{
+//   id: number=0;
+//   title: string = "";
+//   author: string = "";
+//   content: string = "";
+//   createdAt: string = "";
+//   updatedAt: string = "";
+//   userId: string = "";
+//   classification: string = "";
+// }
+
+interface Article {
+	id: number;
+	title: string;
+	author: string;
+	content: string;
+	createdAt: string;
+	updatedAt: string;
+	userId: string;
+	classification: string;
 }
 class Review{
   author: string = "";
@@ -36,6 +46,11 @@ function ListArticle(props: {id: number}) {
             <div>{data?.author}</div>
             <br></br>
             <div>{data?.content}</div>
+						<br/>
+						<div>{data?.createdAt}</div>
+						<div>{data?.updatedAt}</div>
+						<div>{data?.userId}</div>
+						<div>{data?.classification}</div>
           </div>
       <br></br>
       </div>
@@ -48,7 +63,7 @@ async function deletePost(props: {id: string}) {
 	await fetch(`http://localhost:3000/v1/create/delete/${props.id}`)
 }
 
-const Home: NextPage = () => {
+const Home: React.FunctionComponent = () => {
 
   const [article, setArticle] = useState<Article>();
 
@@ -56,19 +71,6 @@ const Home: NextPage = () => {
   const { id } = router.query;
 
 
-
-  // const [reviews, setReviews] = useState<Review[]>([
-  //   {
-  //     author: "龍之介",
-  //     nameDisplay: true,
-  //     content: "2行目の「郊外のぎらぎらひかる草の波」の出典を明記してください"
-  //   },
-  //   {
-  //     author: "諭吉",
-  //     nameDisplay: false,
-  //     content: "「イーハトーヴォ」が分からないので説明してください。"
-  //   }
-  // ]);
    const [loginName, setLoginName] = useState<string>("鴎外");
 
 	 const handleClick = async (id: string) => {
@@ -189,6 +191,7 @@ const Home: NextPage = () => {
       </div> */}
 
 			{typeof id === "string" && <button onClick={() => {handleClick(id)}}><a>id: {id}を削除</a></button>}
+
     </div>
   )
 }
