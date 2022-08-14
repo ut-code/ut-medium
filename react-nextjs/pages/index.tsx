@@ -2,17 +2,8 @@ import type { NextPage } from 'next';
 // import styles from '../styles/Home.module.css'
 import Link from 'next/link';
 import { useState } from 'react';
-import useSWR from 'swr';
+import useDataByClassification from '../components/useDataByClassification';
 
-// class Article {
-// 	id: number;
-//   title: string = "";
-//   author: string = "";
-//   content: string = "";
-//   createdAt: string = "";
-//   updatedAt: string = "";
-//   userId: string = "";
-// };
 
 interface Article {
 	id: number;
@@ -25,8 +16,6 @@ interface Article {
 	classification: string;
 }
 
-
-
 class Review{
   author: string = "";
   content: string = "";
@@ -38,20 +27,24 @@ const fetcher = (url: string) => fetch(url).then(r => r.json()).catch(err => con
 
 function ListArticles(props: {classification: string}) {
   // const [articles, setArticles] = useState<Article[]>([]);
-	let url: string;
-	if (props.classification === "all") {
-		url = "http://localhost:3001/v1/articles";
-	} else {
-		url = `http://localhost:3001/v1/articles/classification/?classification={props.classification}`;
-	}
 
-  const { data, error } = useSWR(url, fetcher);
+	// const url = `${process.env.BACKEND_URL}/v1/articles/classification/${props.classification}`;
+
+  // const { data, error } = useSWR(url, fetcher);
+
+	// const { data, error } = useSWR(`https://ut-medium.onrender.com/v1/articles`, fetcher);
+
+	// const { data, error } = useWR(`http://localhost:3001/v1/articles/classification/${classification}`, fetcher);
+
+	const { dataByClassification, isLoading, isError } = useDataByClassification(props.classification);
+
+	// const { data, error } = useSWR({url}, fetcher);
 
 	return (
     <div>
-      {data?.map((article: Article) => (
+      {dataByClassification?.map((article: Article) => (
         <div key={article.id}>
-          <Link href={{pathname: `/articles/${article.id}`}}>
+          <Link href={{pathname: `/articles/id/${article.id}`}}>
             <div>
               <div className="underline"><a>{article.title}</a></div>
               <div>{article.author}</div>

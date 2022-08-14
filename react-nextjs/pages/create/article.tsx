@@ -24,11 +24,14 @@ interface Article {
 	classification: string;
 }
 
+const URL: string = `${process.env.BACKEND_URL}/v1/articles`;
+
 const ContactForm = (
   <form
     name="contact-form"
     method="POST"
-    action="http://localhost:3001/v1/create/article"
+    action="https://ut-medium.onrender.com/v1/articles"
+		// action={URL}
   >
 
     <label htmlFor="name">author</label>
