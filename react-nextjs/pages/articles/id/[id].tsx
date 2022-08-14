@@ -1,19 +1,9 @@
 // import styles from '../styles/Home.module.css'
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import useSWR from 'swr';
-import ReturnTop from '../../components/returnTop';
+import ReturnTop from '../../../components/returnTop';
+import useDataById from '../../../components/useDataById';
 
-// class Article{
-//   id: number=0;
-//   title: string = "";
-//   author: string = "";
-//   content: string = "";
-//   createdAt: string = "";
-//   updatedAt: string = "";
-//   userId: string = "";
-//   classification: string = "";
-// }
 
 interface Article {
 	id: number;
@@ -25,6 +15,7 @@ interface Article {
 	userId: string;
 	classification: string;
 }
+
 class Review{
   author: string = "";
   content: string = "";
@@ -32,25 +23,26 @@ class Review{
   // avatar: ??? = ???;
 }
 
-
 const fetcher = (url: string) => fetch(url).then(r => r.json()).catch(err => console.log(err));
 
 function ListArticle(props: {id: number}) {
-  const { data, error } = useSWR(`http://localhost:3001/v1/articles/${props.id}`, fetcher);
+  // const { data, error } = useSWR(`https://ut-medium.onrender.com/id/${props.id}`, fetcher);
+	const { dataById, isLoading, isError } = useDataById(props.id.toString());
+	// const { data, error } = useSWR(`https://ut-medium.onrender.com/v1/articles/id/11`, fetcher);
   return (
     <div>
-      <div key={data?.id}>
+      <div key={dataById?.id}>
           <div>
-            <div>{data?.title}</div>
+            <div>{dataById?.title}</div>
             <br></br>
-            <div>{data?.author}</div>
+            <div>{dataById?.author}</div>
             <br></br>
-            <div>{data?.content}</div>
+            <div>{dataById?.content}</div>
 						<br/>
-						<div>{data?.createdAt}</div>
-						<div>{data?.updatedAt}</div>
-						<div>{data?.userId}</div>
-						<div>{data?.classification}</div>
+						<div>{dataById?.createdAt}</div>
+						<div>{dataById?.updatedAt}</div>
+						<div>{dataById?.userId}</div>
+						<div>{dataById?.classification}</div>
           </div>
       <br></br>
       </div>
@@ -58,9 +50,9 @@ function ListArticle(props: {id: number}) {
   );
 }
 
-
 async function deletePost(props: {id: string}) {
-	await fetch(`http://localhost:3001/v1/create/delete/${props.id}`)
+	const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/create/delete/${props.id}`;
+	await fetch(url)
 }
 
 const Home: React.FunctionComponent = () => {
@@ -71,9 +63,9 @@ const Home: React.FunctionComponent = () => {
   const { id } = router.query;
 
 
-   const [loginName, setLoginName] = useState<string>("鴎外");
+  //  const [loginName, setLoginName] = useState<string>("鴎外");
 
-	 const handleClick = async (id: string) => {
+		const handleClick = async (id: string) => {
 		await deletePost({id: id})
 		router.push('/')
 	}

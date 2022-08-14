@@ -24,12 +24,38 @@ interface Article {
 	classification: string;
 }
 
-const ContactForm = (
-  <form
-    name="contact-form"
-    method="POST"
-    action="http://localhost:3001/v1/create/article"
-  >
+// const URL: string = `${process.env.REACT_APP_BACKEND_URL}/v1/articles`;
+
+
+// function MyEditor() {
+// 	const [editorState, setEditorState] = React.useState(
+// 		() => EditorState.createEmpty()
+// 		);
+// 	return <Editor editorState={editorState} onChange={setEditorState} />;
+// }
+
+
+const Home: NextPage = () => {
+	const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/create/article`;
+	// const router = useRouter();
+	// const handleSubmit = (event) => {
+	// 	event.preventDefault();
+	// 	router.push('/');
+	// }
+	const ContactForm = (
+		<form
+			name="contact-form"
+			method="POST"
+			action= {url}
+			// onSubmit = {handleSubmit}
+// redirect to top page
+			// onSubmit={(e) => {
+			// 	e.preventDefault();
+			// 	window.location.href = '/';
+			// }}
+			// action="https://ut-medium.onrender.com/v1/create/article"
+			// action={URL}
+		>
 
     <label htmlFor="name">author</label>
     <input
@@ -61,15 +87,6 @@ const ContactForm = (
     <button type="submit">Submit</button>
   </form>
 );
-
-// function MyEditor() {
-// 	const [editorState, setEditorState] = React.useState(
-// 		() => EditorState.createEmpty()
-// 		);
-// 	return <Editor editorState={editorState} onChange={setEditorState} />;
-// }
-
-const Home: NextPage = () => {
   // const [articles, setArticles] = useState<Article[]>([]);
 
   return (

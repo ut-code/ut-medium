@@ -48,44 +48,70 @@ app.get('/v1', async (req: express.Request, res: express.Response) => {
 //   res.send(posts)
 // })
 
+// app.get('/v1/articles', async(req: express.Request, res: express.Response) => {
+// 	const {id, classification} = req.params
+// 	if (id === "string") {
+// 		const posts = await client.post.findMany({
+// 			where: {
+// 				id: parseInt(id),
+// 			}
+// 		})
+// 		res.send(posts)
+// 		return
+// 	} else if (classification === "string") {
+// 		const posts = await client.post.findMany({
+// 			where: {
+// 				classification: classification,
+// 			}
+// 	})
+// 		res.send(posts)
+// 		return
+// 	} else {
+// 		const posts = await client.post.findMany()
+// 		res.send(posts)
+// 		return
+// 	}
+// })
+
 app.get('/v1/articles', async(req: express.Request, res: express.Response) => {
-	if (req.params.id === "string") {
+	const post = await client.post.findMany()
+	res.send(post)
+})
+
+app.get('/v1/articles/classification/:classification', async(req: express.Request, res: express.Response) => {
+	const {classification} = req.params;
+	if (typeof classification === "string") {
+		if (classification === "all") {
+			const posts = await client.post.findMany()
+			res.send(posts)
+			return
+		} else {
 		const posts = await client.post.findMany({
-			where: {
-				id: parseInt(req.params.id),
-			}
-		})
-		res.send(posts)
-		return
-	} else if (req.params.classification === "string") {
-		const posts = await client.post.findMany({
-			where: {
-				classification: req.params.classification,
-			}
-	})
-		res.send(posts)
-		return
+				where: {
+					classification: classification,
+				}
+			})
+			res.send(posts)
+			return
+		}
 	} else {
-		const posts = await client.post.findMany()
-		res.send(posts)
-		return
+		res.send("error")
 	}
 })
 
-
-// app.get('/v1/articles/:id', async (req: express.Request, res: express.Response) => {
-//   const {id} = req.params;
-// 	if (typeof id === 'string') {
-// 		let post: Article | null = await client.post.findUnique({
-// 			where: {
-// 				id: parseInt(id, 10)
-// 			}
-// 		})
-// 		res.send(post)
-// 	} else {
-// 		res.send("error")
-// 	}
-// })
+app.get('/v1/articles/id/:id', async (req: express.Request, res: express.Response) => {
+  const {id} = req.params;
+	if (typeof id === 'string') {
+		let post = await client.post.findUnique({
+			where: {
+				id: parseInt(id, 10)
+			}
+		})
+		res.send(post)
+	} else {
+		res.send("error")
+	}
+})
 
 app.get('/v1/create/delete/:id', async(req: express.Request, res: express.Response) => {
 	const {id} = req.params;
@@ -102,7 +128,6 @@ app.get('/v1/create/delete/:id', async(req: express.Request, res: express.Respon
 })
 
 
-
 app.post('/v1/create/article', async (req: express.Request, res: express.Response) => {
 	const {title, author, email, content, classification} = req.body;
 	let post = await client.post.create({
@@ -114,5 +139,5 @@ app.post('/v1/create/article', async (req: express.Request, res: express.Respons
 			classification: classification,
 		}
 	})
-	res.redirect('http://localhost:3000')
+	res.send("create successfully")
 })
