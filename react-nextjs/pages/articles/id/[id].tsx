@@ -27,7 +27,7 @@ const fetcher = (url: string) => fetch(url).then(r => r.json()).catch(err => con
 
 function ListArticle(props: {id: number}) {
   // const { data, error } = useSWR(`https://ut-medium.onrender.com/id/${props.id}`, fetcher);
-	const { dataById, isLoading, isError } = useDataById(props.id);
+	const { dataById, isLoading, isError } = useDataById(props.id.toString());
 	// const { data, error } = useSWR(`https://ut-medium.onrender.com/v1/articles/id/11`, fetcher);
   return (
     <div>
@@ -50,9 +50,9 @@ function ListArticle(props: {id: number}) {
   );
 }
 
-
 async function deletePost(props: {id: string}) {
-	await fetch(`${process.env.BACKEND_URL}/v1/create/delete/${props.id}`)
+	const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/create/delete/${props.id}`;
+	await fetch(url)
 }
 
 const Home: React.FunctionComponent = () => {

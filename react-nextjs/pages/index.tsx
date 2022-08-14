@@ -34,7 +34,7 @@ function ListArticles(props: {classification: string}) {
 
 	// const { data, error } = useSWR(`https://ut-medium.onrender.com/v1/articles`, fetcher);
 
-	// const { data, error } = useWR(`http://localhost:3001/v1/articles/classification/${classification}`, fetcher);
+	// const { data, error } = useSWR(`http://localhost:3001/v1/articles/classification/${classification}`, fetcher);
 
 	const { dataByClassification, isLoading, isError } = useDataByClassification(props.classification);
 

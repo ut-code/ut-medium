@@ -128,7 +128,6 @@ app.get('/v1/create/delete/:id', async(req: express.Request, res: express.Respon
 })
 
 
-
 app.post('/v1/create/article', async (req: express.Request, res: express.Response) => {
 	const {title, author, email, content, classification} = req.body;
 	let post = await client.post.create({
