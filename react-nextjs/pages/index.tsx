@@ -1,8 +1,10 @@
 import type { NextPage } from 'next';
 // import styles from '../styles/Home.module.css'
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import useDataByClassification from '../components/useDataByClassification';
+import UtcodeImage from '../public/utc-logo.png';
 
 interface Article {
 	id: number;
@@ -62,9 +64,12 @@ const Home: NextPage = () => {
 
   return (
     <>
-			<div className="h-5">
-				{/* <Image className="h-5" src={UtcodeImage}/> */}
-				<Link href={{pathname: "/login"}}><a>login</a></Link>
+			<div className="flex">
+				{/* image size small */}
+				<Image height={827/30} width={3957/30} src={UtcodeImage}/>
+				<div className="ml-10">
+				<Link className="" href={{pathname: "/login"}}><a>login</a></Link>
+				</div>
 			</div>
 
       <div className="grid grid-cols-7 divide-x">
