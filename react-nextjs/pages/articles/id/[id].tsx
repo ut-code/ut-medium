@@ -5,16 +5,17 @@ import ReturnTop from '../../../components/returnTop';
 import useDataById from '../../../components/useDataById';
 
 
-interface Article {
-	id: number;
-	title: string;
-	author: string;
-	content: string;
-	createdAt: string;
-	updatedAt: string;
-	userId: string;
-	classification: string;
-}
+
+// interface Article {
+// 	id: number;
+// 	title: string;
+// 	author: string;
+// 	content: string;
+// 	createdAt: string;
+// 	updatedAt: string;
+// 	userId: string;
+// 	classification: string;
+// }
 
 class Review{
   author: string = "";

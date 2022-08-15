@@ -73,10 +73,10 @@ app.get('/v1', async (req: express.Request, res: express.Response) => {
 // 	}
 // })
 
-app.get('/v1/articles', async(req: express.Request, res: express.Response) => {
-	const post = await client.post.findMany()
-	res.send(post)
-})
+// app.get('/v1/articles', async(req: express.Request, res: express.Response) => {
+// 	const post = await client.post.findMany()
+// 	res.send(post)
+// })
 
 app.get('/v1/articles/classification/:classification', async(req: express.Request, res: express.Response) => {
 	const {classification} = req.params;
@@ -98,6 +98,32 @@ app.get('/v1/articles/classification/:classification', async(req: express.Reques
 		res.send("error")
 	}
 })
+
+app.get('/v1/articles/', async(req: express.Request, res: express.Response) => {
+	const {id, classification} = req.query;
+	if (id === "null" && classification === "null") {
+		const posts = await client.post.findMany()
+		res.send(posts)
+		return
+	} else if (typeof id === "string") {
+		const posts = await client.post.findMany({
+			where: {
+				id: parseInt(id),
+			}
+		})
+		res.send(posts)
+		return
+	}else if (typeof classification === "string") {
+		const posts = await client.post.findMany({
+			where: {
+				classification: classification,
+			}
+		})
+		res.send(posts)
+		return
+	}
+	}
+)
 
 app.get('/v1/articles/id/:id', async (req: express.Request, res: express.Response) => {
   const {id} = req.params;

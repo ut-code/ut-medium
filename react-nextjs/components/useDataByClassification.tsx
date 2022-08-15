@@ -21,6 +21,6 @@ export default function useDataByClassification(classification: string) {
 	// const { data, error } = useSWR(`https://ut-medium.onrender.com/v1/articles/classification/${classification}`, fetcher);
 	// const { data, error } = useSWR(`${process.env.BACKEND_URL}/v1/articles/classification/${classification}`, fetcher);
 	// const { data, error } = useSWR(`http://localhost:3001/v1/articles/classification/${classification}`, fetcher);
-	const { data, error } = useSWR(url, fetcher);
+	const { data, error } = useSWR<Article[]>(url, fetcher);
 	return { dataByClassification: data, isLoading: !error && !data, isError: error };
 }
