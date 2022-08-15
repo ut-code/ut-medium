@@ -11,8 +11,8 @@ export default NextAuth({
     //   clientSecret: process.env.APPLE_SECRET,
     // }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     }),
     // Sign in with passwordless email link
     // EmailProvider({
