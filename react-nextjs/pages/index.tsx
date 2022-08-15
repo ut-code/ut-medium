@@ -1,9 +1,10 @@
 import type { NextPage } from 'next';
 // import styles from '../styles/Home.module.css'
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import useDataByClassification from '../components/useDataByClassification';
-
+import UtcodeImage from '../public/utc-logo.svg';
 
 interface Article {
 	id: number;
@@ -63,6 +64,7 @@ const Home: NextPage = () => {
 
   return (
     <>
+			<Image src={UtcodeImage} width={100} height={40}/>
       <div className="grid grid-cols-7 divide-x">
 				<div><button onClick={() => {setClassification("all")}}>主要</button></div>
 				<div><button onClick={() => {setClassification("national")}}>国内</button></div>

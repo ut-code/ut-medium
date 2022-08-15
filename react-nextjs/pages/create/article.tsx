@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 // import styles from '../styles/Home.module.css'
 import 'draft-js/dist/Draft.css';
+import CreateArticle from '../../components/createArticle';
 import ReturnTop from '../../components/returnTop';
 
 // class Article{
@@ -42,51 +43,52 @@ const Home: NextPage = () => {
 	// 	event.preventDefault();
 	// 	router.push('/');
 	// }
-	const ContactForm = (
-		<form
-			name="contact-form"
-			method="POST"
-			action= {url}
-			// onSubmit = {handleSubmit}
-// redirect to top page
-			// onSubmit={(e) => {
-			// 	e.preventDefault();
-			// 	window.location.href = '/';
-			// }}
-			// action="https://ut-medium.onrender.com/v1/create/article"
-			// action={URL}
-		>
+// 	const ContactForm = (
+// 		<form
+// 			name="contact-form"
+// 			method="POST"
+// 			action= {url}
+// 			// onSubmit = {handleSubmit}
+// // redirect to top page
+// 			// onSubmit={(e) => {
+// 			// 	e.preventDefault();
+// 			// 	window.location.href = '/';
+// 			// }}
+// 			// action="https://ut-medium.onrender.com/v1/create/article"
+// 			// action={URL}
+// 		>
 
-    <label htmlFor="name">author</label>
-    <input
-      id="author"
-      name="author"
-      required
-      type="text"
-    /><br/>
-    <label htmlFor="title">title</label>
-    <input id="title" name="title" required type="text" /><br/>
 
-    <label htmlFor="content">content</label>
-    <textarea id="content" name="content" required></textarea><br/>
+//     <label htmlFor="name">author</label>
+//     <input
+//       id="author"
+//       name="author"
+//       required
+//       type="text"
+//     /><br/>
+//     <label htmlFor="title">title</label>
+//     <input id="title" name="title" required type="text" /><br/>
 
-		<label htmlFor="email">email</label>
-    <input id="email" type="email" name="email" required /><br/>
+//     <label htmlFor="content">content</label>
+//     <textarea id="content" name="content" required></textarea><br/>
 
-		<label>classification</label>
-		<select id="classification" name="classification" required>
-			<option value="all">all</option>
-			<option value="national">national</option>
-			<option value="international">international</option>
-			<option value="economics">economics</option>
-			<option value="information">information</option>
-			<option value="science">science</option>
-			<option value="sports">sports</option>
-		</select><br/>
+// 		<label htmlFor="email">email</label>
+//     <input id="email" type="email" name="email" required /><br/>
 
-    <button type="submit">Submit</button>
-  </form>
-);
+// 		<label>classification</label>
+// 		<select id="classification" name="classification" required>
+// 			<option value="all">all</option>
+// 			<option value="national">national</option>
+// 			<option value="international">international</option>
+// 			<option value="economics">economics</option>
+// 			<option value="information">information</option>
+// 			<option value="science">science</option>
+// 			<option value="sports">sports</option>
+// 		</select><br/>
+
+//     <button type="submit">Submit</button>
+//   </form>
+// );
   // const [articles, setArticles] = useState<Article[]>([]);
 
   return (
@@ -94,7 +96,10 @@ const Home: NextPage = () => {
       <ReturnTop />
 			<br></br>
 			{/* <MyEditor /> */}
-      {ContactForm}
+      {/* {ContactForm} */}
+			{/* {"以下はreact-hook-formを使って作成したコンポーネント"} */}
+			<CreateArticle />
+
     </>
   )
 }
