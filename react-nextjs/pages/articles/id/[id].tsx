@@ -32,8 +32,10 @@ function ListArticle(props: {id: number}) {
 	// const { data, error } = useSWR(`https://ut-medium.onrender.com/v1/articles/id/11`, fetcher);
   return (
     <div>
+			<div className="grid grid-cols-2 divide-x">
       <div key={dataById?.id}>
           <div>
+						<div>賛成側意見</div><br/>
             <div>{dataById?.title}</div>
             <br></br>
             <div>{dataById?.author}</div>
@@ -47,6 +49,25 @@ function ListArticle(props: {id: number}) {
           </div>
       <br></br>
       </div>
+
+      <div key={dataById?.id}>
+          <div>
+						<div>反対側意見</div><br/>
+            <div>{dataById?.title}</div>
+            <br></br>
+            <div>{dataById?.author}</div>
+            <br></br>
+            <div>{dataById?.content}</div>
+						<br/>
+						<div>{dataById?.createdAt}</div>
+						<div>{dataById?.updatedAt}</div>
+						<div>{dataById?.userId}</div>
+						<div>{dataById?.classification}</div>
+          </div>
+      <br></br>
+      </div>
+		</div>
+
     </div>
   );
 }

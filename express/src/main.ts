@@ -4,15 +4,6 @@ import express from 'express';
 
 const client = new PrismaClient();
 
-// class Article {
-//   id: number;
-//   title: string = "";
-//   author: string = "";
-//   content: string = "";
-//   createdAt: string = "";
-//   updatedAt: string = "";
-//   userId: string = "";
-// };
 
 if (!process.env.PORT) {
   process.exit(1)
@@ -30,13 +21,6 @@ app.listen(PORT, () => {
     console.log(`Start on port ${PORT}.`)
 })
 
-
-// class Article{
-//   title: string = "";
-//   author: string = "";
-//   content: string = "";
-//   // avatar: ??? = ???;
-// }
 
 app.get('/v1', async (req: express.Request, res: express.Response) => {
   let posts = await client.post.findMany()

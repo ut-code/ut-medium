@@ -3,7 +3,7 @@ import GoogleProvider from 'next-auth/providers/google';
 // https://www.npmjs.com/package/next-auth
 
 export default NextAuth({
-  secret: process.env.SECRET,
+  secret: process.env.JWT_SECRET,
   providers: [
     // OAuth authentication providers
     // AppleProvider({
@@ -14,6 +14,7 @@ export default NextAuth({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     }),
+
     // Sign in with passwordless email link
     // EmailProvider({
     //   server: process.env.MAIL_SERVER,

@@ -1,22 +1,35 @@
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from 'next/router';
+import ReturnTop from '../components/returnTop';
 
 export default function Component() {
+	const router = useRouter()
   const { data: session } = useSession()
 	console.log(session)
+	const onClickSignIn = () => {
+		signIn()
+		router.push('/')
+	}
+	const onClickSignOut = () => {
+		signOut()
+		router.push('/')
+	}
   if (session) {
     return (
       <>
+				<ReturnTop /><br/>
         Signed in as {session?.user?.email} <br />
 				{/* Name {session.user.name} <br/> */}
 				{/* <img src={session?.user?.image} alt="" className=""/> */}
-        <button onClick={() => signOut()}>Sign out</button>
+        <button onClick={() => onClickSignOut()}>Sign out</button>
       </>
     )
   }
   return (
     <>
+			<ReturnTop /><br/>
       Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+      <button onClick={() => onClickSignIn()}>Sign in</button>
     </>
   )
 }

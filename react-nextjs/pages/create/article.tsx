@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 // import styles from '../styles/Home.module.css'
 import 'draft-js/dist/Draft.css';
+import { useSession } from 'next-auth/react';
 import CreateArticle from '../../components/createArticle';
 import ReturnTop from '../../components/returnTop';
 
@@ -90,7 +91,7 @@ const Home: NextPage = () => {
 //   </form>
 // );
   // const [articles, setArticles] = useState<Article[]>([]);
-
+	const {data: session, status}	= useSession();
   return (
     <>
       <ReturnTop />
@@ -98,7 +99,7 @@ const Home: NextPage = () => {
 			{/* <MyEditor /> */}
       {/* {ContactForm} */}
 			{/* {"以下はreact-hook-formを使って作成したコンポーネント"} */}
-			<CreateArticle />
+			<CreateArticle session={session} status={status} />
 
     </>
   )

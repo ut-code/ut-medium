@@ -11,7 +11,7 @@
 import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-export default function App() {
+export default function App(props: {session: any, status: string}) {
 	const router = useRouter();
 	const {register, handleSubmit, formState: {errors},} = useForm<Article>();
 	const onSubmit: SubmitHandler<Article> = async (data) => {
@@ -28,6 +28,9 @@ export default function App() {
 	}
 
 	return (
+		<>
+		{props.status==="authenticated" && props.session.user.name}
+		{props.status==="authenticated" || "not logged in"}
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<input {...register('author', {required: true})} placeholder="author" />
 			{errors.author && <span>author is required</span>}
@@ -49,5 +52,6 @@ export default function App() {
 			{errors.classification && <span>classification is required</span>}
 			<input type="submit"/>
 		</form>
+		</>
 	)
 }
