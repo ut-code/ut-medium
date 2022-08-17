@@ -4,19 +4,8 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import useDataByClassification from '../components/useDataByClassification';
+import getData from '../components/getData';
 import UtcodeImage from '../public/utc-logo.png';
-
-interface Article {
-	id: number;
-	title: string;
-	author: string;
-	content: string;
-	createdAt: string;
-	updatedAt: string;
-	userId: string;
-	classification: string;
-}
 
 class Review{
   author: string = "";
@@ -38,13 +27,13 @@ function ListArticles(props: {classification: string}) {
 
 	// const { data, error } = useSWR(`http://localhost:3001/v1/articles/classification/${classification}`, fetcher);
 
-	const { dataByClassification, isLoading, isError } = useDataByClassification(props.classification);
-
+	// const { dataByClassification, isLoading, isError } = useDataByClassification(props.classification);
+	const {data: dataByClassification} = getData<Post[]>(`/v1/articles/classification/${props.classification}`);
 	// const { data, error } = useSWR({url}, fetcher);
 
 	return (
     <div>
-      {dataByClassification?.map((article: Article) => (
+      {dataByClassification?.map((article: Post) => (
         <div key={article.id}>
           <Link href={{pathname: `/articles/id/${article.id}`}}>
             <div>
@@ -77,7 +66,7 @@ function ShowLoginStatus (props: {session: any, status: string}) {
 
 
 const Home: NextPage = () => {
-  const [articles, setArticles] = useState<Article[]>([]);
+  const [articles, setArticles] = useState<Post[]>([]);
 	const [classification, setClassification] = useState<string>("all");
 	const { data: session, status } = useSession();
 	console.log(session);
@@ -102,14 +91,17 @@ const Home: NextPage = () => {
 				<div><button onClick={() => {setClassification("science")}}>科学</button></div>
 				<div><button onClick={() => {setClassification("sports")}}>スポーツ</button></div>
 			</div>
-
 			<br/>
 
       <ListArticles classification={classification} />
 
       <Link href={{pathname: '/create/article'}}>
         <a>Create Article</a>
-      </Link>
+      </Link><br/>
+
+			<Link href={{pathname: '/allData'}} >
+				<a>Show all data</a>
+			</Link>
 
 			{/* <Link href={{pathname: '/create/review'}}>
 				<a>Create Review</a>
@@ -119,3 +111,12 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+
+// export async function getStaticProps() {
+// 	const client = new PrismaClient()
+// 	const posts = await client.article.findMany();
+// 	return {
+// 		props: {posts}
+// 	}
+// }

@@ -15,16 +15,16 @@ import ReturnTop from '../../components/returnTop';
 //   classification: string = "";
 // }
 
-interface Article {
-	id: number;
-	title: string;
-	author: string;
-	content: string;
-	createdAt: string;
-	updatedAt: string;
-	userId: string;
-	classification: string;
-}
+// interface Article {
+// 	id: number;
+// 	title: string;
+// 	author: string;
+// 	content: string;
+// 	createdAt: string;
+// 	updatedAt: string;
+// 	userId: string;
+// 	classification: string;
+// }
 
 // const URL: string = `${process.env.REACT_APP_BACKEND_URL}/v1/articles`;
 
@@ -35,7 +35,6 @@ interface Article {
 // 		);
 // 	return <Editor editorState={editorState} onChange={setEditorState} />;
 // }
-
 
 const Home: NextPage = () => {
 	const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/create/article`;
@@ -92,15 +91,16 @@ const Home: NextPage = () => {
 // );
   // const [articles, setArticles] = useState<Article[]>([]);
 	const {data: session, status}	= useSession();
+
   return (
     <>
       <ReturnTop />
+
 			<br></br>
 			{/* <MyEditor /> */}
       {/* {ContactForm} */}
 			{/* {"以下はreact-hook-formを使って作成したコンポーネント"} */}
 			<CreateArticle session={session} status={status} />
-
     </>
   )
 }

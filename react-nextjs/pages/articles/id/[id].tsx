@@ -1,9 +1,7 @@
 // import styles from '../styles/Home.module.css'
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import getData from '../../../components/getData';
 import ReturnTop from '../../../components/returnTop';
-import useDataById from '../../../components/useDataById';
-
 
 
 // interface Article {
@@ -28,10 +26,15 @@ const fetcher = (url: string) => fetch(url).then(r => r.json()).catch(err => con
 
 function ListArticle(props: {id: number}) {
   // const { data, error } = useSWR(`https://ut-medium.onrender.com/id/${props.id}`, fetcher);
-	const { dataById, isLoading, isError } = useDataById(props.id.toString());
-	// const { data, error } = useSWR(`https://ut-medium.onrender.com/v1/articles/id/11`, fetcher);
+	// const { dataById, isLoading, isError } = useDataById(props.id.toString());
+	const {data: dataById, isLoading, isError} = getData<Post>(`/v1/articles/id/${props.id.toString()}`);
+ 	// const { data, error } = useSWR(`https://ut-medium.onrender.com/v1/articles/id/11`, fetcher);
   return (
     <div>
+
+			{isLoading && <div>Loading...</div>}
+
+
 			<div className="grid grid-cols-2 divide-x">
       <div key={dataById?.id}>
           <div>
@@ -40,7 +43,7 @@ function ListArticle(props: {id: number}) {
             <br></br>
             <div>{dataById?.author}</div>
             <br></br>
-            <div>{dataById?.content}</div>
+            <div>{dataById?.prosContent}</div>
 						<br/>
 						<div>{dataById?.createdAt}</div>
 						<div>{dataById?.updatedAt}</div>
@@ -57,7 +60,7 @@ function ListArticle(props: {id: number}) {
             <br></br>
             <div>{dataById?.author}</div>
             <br></br>
-            <div>{dataById?.content}</div>
+            <div>{dataById?.oppContent}</div>
 						<br/>
 						<div>{dataById?.createdAt}</div>
 						<div>{dataById?.updatedAt}</div>
@@ -67,7 +70,6 @@ function ListArticle(props: {id: number}) {
       <br></br>
       </div>
 		</div>
-
     </div>
   );
 }
@@ -79,7 +81,7 @@ async function deletePost(props: {id: string}) {
 
 const Home: React.FunctionComponent = () => {
 
-  const [article, setArticle] = useState<Article>();
+  // const [article, setArticle] = useState<Post>();
 
   const router = useRouter()
   const { id } = router.query;
@@ -96,7 +98,7 @@ const Home: React.FunctionComponent = () => {
     <div>
 			<ReturnTop />
 
-     <br/>
+			<br/>
 
       {typeof id === "string" && <ListArticle id={parseInt(id)} />}
       {/* <div>{article?.id}</div>

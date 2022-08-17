@@ -139,7 +139,7 @@ app.get('/v1/create/delete/:id', async(req: express.Request, res: express.Respon
 
 
 app.post('/v1/create/article', async (req: express.Request, res: express.Response) => {
-	const {title, author, email, content, classification} = req.body;
+	const {userId, title, author, content, classification} = req.body;
 	let post = await client.post.create({
 		data: {
 			title: title,
@@ -151,3 +151,31 @@ app.post('/v1/create/article', async (req: express.Request, res: express.Respons
 	})
 	res.send("create successfully")
 })
+
+
+app.get('/v1/post', async (req: express.Request, res: express.Response) => {
+	let posts = await client.post.findMany()
+	res.send(posts)
+})
+
+app.get('/v1/user', async (req: express.Request, res: express.Response) => {
+	let users = await client.user.findMany()
+	res.send(users)
+})
+
+app.get('/v1/usersOnPost', async (req: express.Request, res: express.Response) => {
+	let usersOnPost = await client.usersOnPosts.findMany()
+	res.send(usersOnPost)
+})
+
+app.get('/v1/session', async(req: express.Request, res: express.Response) => {
+	let session = await client.session.findMany()
+	res.send(session)
+})
+
+app.get('/v1/profile', async(req: express.Request, res: express.Response) => {
+	let profile = await client.profile.findMany()
+	res.send(profile)
+})
+
+
