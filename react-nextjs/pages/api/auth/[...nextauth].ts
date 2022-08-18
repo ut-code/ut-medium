@@ -1,5 +1,10 @@
+// import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { PrismaClient } from '@prisma/client';
 import NextAuth from 'next-auth/next';
 import GoogleProvider from 'next-auth/providers/google';
+
+const client = new PrismaClient();
+
 // https://www.npmjs.com/package/next-auth
 
 export default NextAuth({
@@ -14,13 +19,15 @@ export default NextAuth({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     }),
-
-    // Sign in with passwordless email link
-    // EmailProvider({
-    //   server: process.env.MAIL_SERVER,
-    //   from: "<no-reply@example.com>",
-    // }),
   ],
+	// adapter: PrismaAdapter(client), 今後の課題
+	// callbacks: {
+	// 	async session(session, user) => {
+	// 		session.accessToken = user.accessToken;
+	// 		session.expires = user.expires;
+	// 		return session;
+	// 	}
+	// }
 })
 
 // export default NextAuth({

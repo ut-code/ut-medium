@@ -2,16 +2,15 @@
 import getData from '../components/getData';
 
 export default function ListAllData() {
-	const {data: post} = getData<Post[]>('/v1/post');
-	const {data: user} = getData<User[]>('/v1/user');
-	const {data: usersOnPost} = getData<UsersOnPosts[]>('/v1/usersOnPost');
-	const {data: session} = getData<Session[]>('/v1/session');
-	const {data: profile} = getData<Profile[]>('/v1/profile');
+	const {data: posts} = getData<Post[]>('/v1/post');
+	const {data: users} = getData<User[]>('/v1/user');
+	const {data: sessions} = getData<Session[]>('/v1/session');
+	const {data: profiles} = getData<Profile[]>('/v1/profile');
 
 
 	return (
 		<>
-		{user?.map((user: User) => {
+		{users?.map((user: User) => {
 			return (
 				<div key={user.id}>
 					<p>{user.id}</p>
@@ -24,33 +23,22 @@ export default function ListAllData() {
 			)
 		})}
 
-		{post?.map((post: Post) => {
+		{posts?.map((post: Post) => {
 			return (
 				<div key={post.id}>
 					<p>{post.id}</p>
 					<p>{post.title}</p>
-					<p>{post.author}</p>
+					<p>{post.penName}</p>
+					<p>{post.userId}</p>
+					<p>{post.classification}</p>
 					<p>{post.content}</p>
 					<p>{post.createdAt}</p>
 					<p>{post.updatedAt}</p>
-					<p>{post.classification}</p>
-					{/* <p>{post.users}</p> */}
 				</div>
 			)
 		})}
 
-		{/* {usersOnPost?.map((usersOnPost) => {
-			return (
-				<div key={[usersOnPost.userId, usersOnPost.postId].toString()}>
-					<p>{usersOnPost.userId}</p>
-					<p>{usersOnPost.postId}</p>
-					<p>{usersOnPost.assignedAt}</p>
-					<p>{usersOnPost.assignedBy}</p>
-				</div>
-			)
-		})} */}
-
-		{session?.map((session: Session) => {
+		{sessions?.map((session: Session) => {
 			return (
 				<div key={session.userId}>
 					<p>{session.id}</p>
@@ -59,7 +47,7 @@ export default function ListAllData() {
 			)
 		})}
 
-		{profile?.map((profile: Profile) => {
+		{profiles?.map((profile: Profile) => {
 			return (
 				<div key={profile.id}>
 					<p>{profile.id}</p>

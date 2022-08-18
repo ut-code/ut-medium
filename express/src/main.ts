@@ -137,16 +137,39 @@ app.get('/v1/create/delete/:id', async(req: express.Request, res: express.Respon
 	}
 })
 
+app.post('/v1/create/user', async(req: express.Request, res: express.Response) => {
+	const {name, email} = req.body;
+	if (typeof name === 'string' && typeof email === 'string') {
+		const userCount = await client.user.count({
+			where: {
+				email: email
+			}
+		})
+		if (userCount === 0){
+			const user = await client.user.create({
+				data: {
+					name: name,
+					email: email
+				}
+			})
+		res.send(user)
+		return
+		}
+	} else {
+		res.send("error")
+	}
+})
 
 app.post('/v1/create/article', async (req: express.Request, res: express.Response) => {
-	const {userId, title, author, content, classification} = req.body;
-	let post = await client.post.create({
+	const {title, penName, userId, classification, content} = req.body;
+
+	const post = await client.post.create({
 		data: {
 			title: title,
-			author: author,
-			// email,
-			content: content,
+			penName: penName,
+			userId: userId,
 			classification: classification,
+			content: content,
 		}
 	})
 	res.send("create successfully")
@@ -163,10 +186,6 @@ app.get('/v1/user', async (req: express.Request, res: express.Response) => {
 	res.send(users)
 })
 
-app.get('/v1/usersOnPost', async (req: express.Request, res: express.Response) => {
-	let usersOnPost = await client.usersOnPosts.findMany()
-	res.send(usersOnPost)
-})
 
 app.get('/v1/session', async(req: express.Request, res: express.Response) => {
 	let session = await client.session.findMany()

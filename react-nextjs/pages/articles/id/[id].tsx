@@ -1,34 +1,18 @@
-// import styles from '../styles/Home.module.css'
 import { useRouter } from 'next/router';
 import getData from '../../../components/getData';
 import ReturnTop from '../../../components/returnTop';
 
 
-// interface Article {
-// 	id: number;
-// 	title: string;
-// 	author: string;
-// 	content: string;
-// 	createdAt: string;
-// 	updatedAt: string;
-// 	userId: string;
-// 	classification: string;
-// }
-
 class Review{
   author: string = "";
   content: string = "";
   nameDisplay: boolean = false;
-  // avatar: ??? = ???;
 }
 
 const fetcher = (url: string) => fetch(url).then(r => r.json()).catch(err => console.log(err));
 
 function ListArticle(props: {id: number}) {
-  // const { data, error } = useSWR(`https://ut-medium.onrender.com/id/${props.id}`, fetcher);
-	// const { dataById, isLoading, isError } = useDataById(props.id.toString());
-	const {data: dataById, isLoading, isError} = getData<Post>(`/v1/articles/id/${props.id.toString()}`);
- 	// const { data, error } = useSWR(`https://ut-medium.onrender.com/v1/articles/id/11`, fetcher);
+	const {data: post, isLoading, isError} = getData<Post>('/v1/articles/id/' + props.id.toString());
   return (
     <div>
 
@@ -36,58 +20,55 @@ function ListArticle(props: {id: number}) {
 
 
 			<div className="grid grid-cols-2 divide-x">
-      <div key={dataById?.id}>
+      <div key={post?.id}>
           <div>
 						<div>賛成側意見</div><br/>
-            <div>{dataById?.title}</div>
+            <div>{post?.title}</div>
             <br></br>
-            <div>{dataById?.author}</div>
+            <div>{post?.penName}</div>
             <br></br>
-            <div>{dataById?.prosContent}</div>
+            <div>{post?.content}</div>
 						<br/>
-						<div>{dataById?.createdAt}</div>
-						<div>{dataById?.updatedAt}</div>
-						<div>{dataById?.userId}</div>
-						<div>{dataById?.classification}</div>
+						<div>{post?.createdAt}</div>
+						<div>{post?.updatedAt}</div>
+						<div>{post?.userId}</div>
+						<div>{post?.classification}</div>
           </div>
       <br></br>
       </div>
 
-      <div key={dataById?.id}>
+      {/* <div key={dataById?.id}>
           <div>
 						<div>反対側意見</div><br/>
             <div>{dataById?.title}</div>
             <br></br>
             <div>{dataById?.author}</div>
             <br></br>
-            <div>{dataById?.oppContent}</div>
+            <div>{dataById?.content}</div>
 						<br/>
 						<div>{dataById?.createdAt}</div>
 						<div>{dataById?.updatedAt}</div>
 						<div>{dataById?.userId}</div>
 						<div>{dataById?.classification}</div>
-          </div>
-      <br></br>
-      </div>
+          </div><br/>
+      </div> */}
+
 		</div>
     </div>
   );
 }
 
 async function deletePost(props: {id: string}) {
-	const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/create/delete/${props.id}`;
+	const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}` + '/v1/create/delete/' + props.id;
 	await fetch(url)
 }
 
 const Home: React.FunctionComponent = () => {
 
-  // const [article, setArticle] = useState<Post>();
 
   const router = useRouter()
   const { id } = router.query;
 
-
-  //  const [loginName, setLoginName] = useState<string>("鴎外");
 
 		const handleClick = async (id: string) => {
 		await deletePost({id: id})

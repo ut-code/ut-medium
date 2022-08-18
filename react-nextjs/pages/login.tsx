@@ -6,8 +6,18 @@ export default function Component() {
 	const router = useRouter()
   const { data: session } = useSession()
 	console.log(session)
-	const onClickSignIn = () => {
+	const onClickSignIn = async () => {
 		signIn()
+
+		const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}` + '/v1/create/user';
+		const response = await fetch(url, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({"name": session?.user?.name, "email": session?.user?.email}),
+		})
+
 		router.push('/')
 	}
 	const onClickSignOut = () => {

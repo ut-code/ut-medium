@@ -37,7 +37,7 @@ import ReturnTop from '../../components/returnTop';
 // }
 
 const Home: NextPage = () => {
-	const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/create/article`;
+	const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}` + '/v1/create/article';
 	// const router = useRouter();
 	// const handleSubmit = (event) => {
 	// 	event.preventDefault();

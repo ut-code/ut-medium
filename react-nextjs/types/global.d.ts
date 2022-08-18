@@ -2,20 +2,6 @@ export { };
 
 export type Classification = "all" | "national" | "international" | "economics" | "information" | "science" | "sports";
 
-declare global{
-	interface Post {
-	id: number;
-	title: string;
-	author: string;
-	// content: string;
-	prosContent: string;
-	oppContent: string;
-	createdAt: string;
-	updatedAt: string;
-	userId: string;
-	classification: Classification;
-	}
-}
 
 declare global{
 		interface User {
@@ -30,6 +16,27 @@ declare global{
 		role:      Role;
 	}
 }
+
+declare global{
+	interface Post {
+	id: number;
+	title: string;
+	penName: string;
+	userId: Int
+	classification: String;
+	content: string;
+	createdAt: string;
+	updatedAt: string;
+	}
+}
+
+declare global{
+	interface Session {
+		id:     String
+		userId: Int
+	}
+}
+
 
 enum Role {
   USER,
@@ -47,33 +54,3 @@ declare global{
 	}
 }
 
-declare global{
-	interface Post {
-		id:             Int
-		title:          String
-		author:         String
-		content:    String
-		createdAt:      DateTime
-		updatedAt:      DateTime
-		classification: Classification
-		users: UsersOnPosts[]
-	}
-}
-
-declare global{
-	interface UsersOnPosts {
-  user:       User
-  userId:     Int
-  post:       Post
-  postId:     Int
-  assignedAt: DateTime
-  assignedBy: String
-	}
-}
-
-declare global{
-	interface Session {
-		id:     String
-		userId: Int
-	}
-}

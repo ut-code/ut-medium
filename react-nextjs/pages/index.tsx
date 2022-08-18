@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
-// import styles from '../styles/Home.module.css'
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -11,34 +10,21 @@ class Review{
   author: string = "";
   content: string = "";
   nameDisplay: boolean = false;
-  // avatar: ??? = ???;
 }
 
 const fetcher = (url: string) => fetch(url).then(r => r.json()).catch(err => console.log(err));
 
 function ListArticles(props: {classification: string}) {
-  // const [articles, setArticles] = useState<Article[]>([]);
-
-	// const url = `${process.env.BACKEND_URL}/v1/articles/classification/${props.classification}`;
-
-  // const { data, error } = useSWR(url, fetcher);
-
-	// const { data, error } = useSWR(`https://ut-medium.onrender.com/v1/articles`, fetcher);
-
-	// const { data, error } = useSWR(`http://localhost:3001/v1/articles/classification/${classification}`, fetcher);
-
-	// const { dataByClassification, isLoading, isError } = useDataByClassification(props.classification);
-	const {data: dataByClassification} = getData<Post[]>(`/v1/articles/classification/${props.classification}`);
-	// const { data, error } = useSWR({url}, fetcher);
+		const {data: posts} = getData<Post[]>('/v1/articles/classification/'+props.classification);
 
 	return (
     <div>
-      {dataByClassification?.map((article: Post) => (
-        <div key={article.id}>
-          <Link href={{pathname: `/articles/id/${article.id}`}}>
+      {posts?.map((post: Post) => (
+        <div key={post.id}>
+          <Link href={{pathname: `/articles/id/` + post.id}}>
             <div>
-              <div className="underline"><a>{article.title}</a></div>
-              <div>{article.author}</div>
+              <div className="underline"><a>{post.title}</a></div>
+              <div>{post.penName}</div>
             </div>
           </Link><br/>
         </div>
@@ -73,13 +59,11 @@ const Home: NextPage = () => {
   return (
     <>
 			<div className="flex">
-				{/* image size small */}
-				<Image height={827/30} width={3957/30} src={UtcodeImage}/>
+				<Image height={827/30} width={3957/30} src={UtcodeImage} alt="image"/>
 				<ShowLoginStatus session={session} status={status} />
 				<div className="ml-10">
-				<Link className="" href={{pathname: "/login"}}><a>login</a></Link>
+					<Link className="" href={{pathname: "/login"}}><a>login</a></Link>
 				</div>
-
 			</div>
 
       <div className="grid grid-cols-7 divide-x">
@@ -102,21 +86,8 @@ const Home: NextPage = () => {
 			<Link href={{pathname: '/allData'}} >
 				<a>Show all data</a>
 			</Link>
-
-			{/* <Link href={{pathname: '/create/review'}}>
-				<a>Create Review</a>
-			</Link> */}
     </>
   )
 }
 
 export default Home
-
-
-// export async function getStaticProps() {
-// 	const client = new PrismaClient()
-// 	const posts = await client.article.findMany();
-// 	return {
-// 		props: {posts}
-// 	}
-// }
