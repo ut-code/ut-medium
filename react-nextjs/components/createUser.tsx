@@ -22,13 +22,14 @@ export default function App() {
 			});
 		};
 		createUser();
+		// router.push("/loginPage");
 	}
 	})
 	return (
 		<>
 			<ReturnTop />
+			createUser
 			<br />
-			user is created
 		</>
 	)
 }

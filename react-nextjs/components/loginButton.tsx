@@ -5,6 +5,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 export default function LoginButton() {
   const { data: session } = useSession()
   if (session) {
+		// router.push('/createUser')
 		// async () => {
 		// const userCount = await prisma.user.count({
 		// 	where: {
@@ -30,7 +31,7 @@ export default function LoginButton() {
   return (
     <>
       Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+      <button onClick={() => {signIn();}}>Sign in</button>
     </>
   )
 }

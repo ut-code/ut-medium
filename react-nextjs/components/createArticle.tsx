@@ -18,7 +18,7 @@ export default function App() {
 			},
 			body: JSON.stringify(data),
 		})
-		// router.push("/");
+		router.push("/");
 	}
 
 	if (status==="authenticated") {

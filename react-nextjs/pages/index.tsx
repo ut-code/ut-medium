@@ -37,9 +37,7 @@ function ShowLoginStatus (props: {session: any, status: string}) {
 	if (props.status==="authenticated") {
 		return (
 			<div>
-				<span>   Logged in as </span>
-				{props.session.user.name}
-				<div></div>
+				<div className="ml-10">{props.session.user.name}</div>
 			</div>
 		)
 	}
@@ -79,13 +77,15 @@ const Home: NextPage = () => {
 
       <ListArticles classification={classification} />
 
-      <Link href={{pathname: '/create/article'}}>
-        <a>Create Article</a>
-      </Link><br/><br/>
 
+      {status==="authenticated" && session?.user?.email?.endsWith('@g.ecc.u-tokyo.ac.jp') && <><Link href={{pathname: '/create/article'}}>
+        <a>Create Article</a>
+      </Link><br/><br/></>}
+
+			{status==="authenticated" && session?.user?.email?.endsWith('1234hakataramen@g.ecc.u-tokyo.ac.jp') &&
 			<Link href={{pathname: '/allData'}} >
 				<a>Show all data</a>
-			</Link>
+			</Link>}
     </>
   )
 }
