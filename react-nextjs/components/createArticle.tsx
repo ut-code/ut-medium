@@ -1,13 +1,15 @@
-
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-export default function App(props: {session: any, status: string}) {
+
+export default function App() {
+	const {data: session, status } = useSession()
 	const router = useRouter();
-	const {register, handleSubmit, formState: {errors},} = useForm<Post>();
+	const {register, handleSubmit, formState: {errors}} = useForm<CreatePost>();
 	const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}` + '/v1/create/article';
 
-	const onSubmit: SubmitHandler<Post> = async (data) => {
+	const onSubmit: SubmitHandler<CreatePost> = async (data) => {
 		console.log(data);
 		await fetch(url, {
 			method: "POST",
@@ -16,37 +18,10 @@ export default function App(props: {session: any, status: string}) {
 			},
 			body: JSON.stringify(data),
 		})
-		router.push("/");
+		// router.push("/");
 	}
 
-	// if (props.status==="authenticated") {
-	// 	return (<>
-	// 	<form onSubmit={handleSubmit(onSubmit)}>
-	// 		<select {...register('penName', {required: true})} placeholder="author">
-	// 			<option value={props.session.user.name}>{props.session.user.name}</option>
-	// 			<option value="ut-student">ut-student</option>
-	// 		</select>
-
-	// 		<input {...register('title', {required: true})} placeholder="title" />
-	// 		{errors.title && <span>title is required</span>}
-	// 		<input {...register('content', {required: true})} placeholder="content" />
-	// 		<select {...register('classification', {required: true})} placeholder="classification">
-	// 			<option value="all">all</option>
-	// 			<option value="national">national</option>
-	// 			<option value="international">international</option>
-	// 			<option value="economics">economics</option>
-	// 			<option value="information">information</option>
-	// 			<option value="science">science</option>
-	// 			<option value="sports">sports</option>
-	// 		</select>
-	// 		{errors.classification && <span>classification is required</span>}
-	// 		<input type="submit"/>
-	// 		<input {...register('userId', {required: true})} type="hidden" value={props.session.user.id} />
-	// 	</form>
-	// 	</>)
-	// }
-
-	if (props.status==="authenticated") {
+	if (status==="authenticated") {
 	return (
 		<>
 		<form onSubmit={handleSubmit(onSubmit)}>
@@ -69,7 +44,8 @@ export default function App(props: {session: any, status: string}) {
 			</select>
 			{errors.classification && <span>classification is required</span>}
 			<input type="submit"/>
-			<input {...register('userId', {required: true})} type="hidden" value={-1} />
+			<input {...register('email', {required: true})} type="hidden" value={session?.user?.email?.toString()} />
+			<input {...register('name', {required: true})} type="hidden" value={session?.user?.name?.toString()} />
 		</form>
 		</>
 	)}

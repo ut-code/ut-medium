@@ -62,7 +62,7 @@ const Home: NextPage = () => {
 				<Image height={827/30} width={3957/30} src={UtcodeImage} alt="image"/>
 				<ShowLoginStatus session={session} status={status} />
 				<div className="ml-10">
-					<Link className="" href={{pathname: "/login"}}><a>login</a></Link>
+					<Link className="" href={{pathname: "/loginPage"}}><a>login</a></Link>
 				</div>
 			</div>
 

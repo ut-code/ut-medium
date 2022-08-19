@@ -22,7 +22,7 @@ export const getServerSideProps = async (context: GetSessionParams | undefined) 
 	if (!session) {
 		return {
 			redirect: {
-				destination: '/login',
+				destination: '/loginPage',
 			}
 		}
 	}
