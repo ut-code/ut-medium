@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import ReturnTop from './returnTop';
 
 export default function App() {
 	const {data: session, status } = useSession()
@@ -25,7 +26,9 @@ export default function App() {
 	})
 	return (
 		<>
-			createUser
+			<ReturnTop />
+			<br />
+			user is created
 		</>
 	)
 }

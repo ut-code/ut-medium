@@ -183,20 +183,21 @@ app.post('/v1/create/article', async (req: express.Request, res: express.Respons
 			email: email
 		}
 	})
-	if (user?.id === 'string'){
+	if (user) {
 		const post = await client.post.create({
 		data: {
 			title: title,
 			penName: penName,
-			userId: user?.id,
+			userId: user.id,
 			classification: classification,
 			content: content,
 		}
-	})} else {
+	})
+	res.send(user)
+	} else {
 		res.send("error")
 		return
 	}
-	res.send("create successfully")
 })
 
 

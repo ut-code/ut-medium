@@ -25,8 +25,7 @@ export default function App() {
 	return (
 		<>
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<input {...register('penName', {required: true})} value="ut-medium" placeholder="ut-medium" />
-
+			<input {...register('penName', {required: true})} placeholder="ペンネーム" />
 			<input {...register('title', {required: true})} placeholder="title" />
 			{errors.title && <span>title is required</span>}
 			<input {...register('content', {required: true})} placeholder="content" />
@@ -51,7 +50,6 @@ export default function App() {
 	)}
 	return (
 		<>
-
 		</>
 	)
 }

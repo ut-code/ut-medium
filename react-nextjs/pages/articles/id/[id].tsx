@@ -22,17 +22,17 @@ function ListArticle(props: {id: number}) {
 			<div className="grid grid-cols-2 divide-x">
       <div key={post?.id}>
           <div>
-						<div>賛成側意見</div><br/>
+						{/* <div>賛成側意見</div><br/> */}
             <div>{post?.title}</div>
             <br></br>
             <div>{post?.penName}</div>
             <br></br>
             <div>{post?.content}</div>
 						<br/>
-						<div>{post?.createdAt}</div>
-						<div>{post?.updatedAt}</div>
-						<div>{post?.userId}</div>
-						<div>{post?.classification}</div>
+						<div>createdAt: {post?.createdAt}</div>
+						{/* <div>{post?.updatedAt}</div> */}
+						{/* <div>{post?.userId}</div> */}
+						<div>classification: {post?.classification}</div>
           </div>
       <br></br>
       </div>

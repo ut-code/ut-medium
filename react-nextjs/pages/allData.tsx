@@ -1,5 +1,6 @@
 // import styles from '../styles/Home.module.css'
 import getData from '../components/getData';
+import ReturnTop from '../components/returnTop';
 
 export default function ListAllData() {
 	const {data: posts} = getData<Post[]>('/v1/post');
@@ -10,6 +11,7 @@ export default function ListAllData() {
 
 	return (
 		<>
+		<ReturnTop /><br />
 		{users?.map((user: User) => {
 			return (
 				<div key={user.id}>
@@ -21,7 +23,7 @@ export default function ListAllData() {
 					<p>{user.role}</p>
 				</div>
 			)
-		})}
+		})} <br />
 
 		{posts?.map((post: Post) => {
 			return (
@@ -36,7 +38,7 @@ export default function ListAllData() {
 					<p>{post.updatedAt}</p>
 				</div>
 			)
-		})}
+		})} <br />
 
 		{sessions?.map((session: Session) => {
 			return (
@@ -45,7 +47,7 @@ export default function ListAllData() {
 					<p>{session.userId}</p>
 				</div>
 			)
-		})}
+		})} <br />
 
 		{profiles?.map((profile: Profile) => {
 			return (
@@ -57,7 +59,7 @@ export default function ListAllData() {
 					<p>{profile.userId}</p>
 				</div>
 			)
-		})}
+		})} <br />
 		</>
 	)
 }

@@ -81,7 +81,7 @@ const Home: NextPage = () => {
 
       <Link href={{pathname: '/create/article'}}>
         <a>Create Article</a>
-      </Link><br/>
+      </Link><br/><br/>
 
 			<Link href={{pathname: '/allData'}} >
 				<a>Show all data</a>
