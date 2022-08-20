@@ -18,9 +18,9 @@ export default function ListAllData() {
 					<p>{user.id}</p>
 					<p>{user.name}</p>
 					<p>{user.email}</p>
-					<p>{user.createdAt}</p>
-					<p>{user.updatedAt}</p>
-					<p>{user.role}</p>
+					{/* <p>{user.createdAt}</p> */}
+					{/* <p>{user.updatedAt}</p> */}
+					{/* <p>{user.role}</p> */}
 				</div>
 			)
 		})} <br />
