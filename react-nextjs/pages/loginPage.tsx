@@ -13,7 +13,7 @@ export default function Component() {
 			<ReturnTop /> <br />
 			<LoginButton/> <br />
 			<br />
-			<button onClick={() => router.push('/createUser')}>if you are logged in for the first time, click<br/> createUser</button>
+			{/* <button onClick={() => router.push('/createUser')}>if you are logged in for the first time, click<br/> createUser</button> */}
 		</>
 	)
 }
