@@ -78,7 +78,7 @@ const Home: NextPage = () => {
       <ListArticles classification={classification} />
 
 
-      {status==="authenticated" && session?.user?.email?.endsWith('@g.ecc.u-tokyo.ac.jp') && <><Link href={{pathname: '/create/article'}}>
+      {status==="authenticated" && (session?.user?.email?.endsWith('@g.ecc.u-tokyo.ac.jp') || session?.user?.email?.endsWith('.alumni.u-tokyo.ac.jp')) && <><Link href={{pathname: '/create/article'}}>
         <a>Create Article</a>
       </Link><br/><br/></>}
 
