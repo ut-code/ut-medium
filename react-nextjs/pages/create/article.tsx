@@ -100,7 +100,7 @@ const Home: NextPage = () => {
 			{/* <MyEditor /> */}
       {/* {ContactForm} */}
 			{/* {"以下はreact-hook-formを使って作成したコンポーネント"} */}
-			<CreateArticle session={session} status={status} />
+			<CreateArticle />
     </>
   )
 }
