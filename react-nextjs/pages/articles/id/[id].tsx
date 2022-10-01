@@ -36,7 +36,7 @@ function ListArticle(props: {id: number}) {
               </div>
               <div>classification: {post?.classification}</div>
             </div>
-            <div className="mt-4">{post?.content}</div>
+            <div className="mt-4">{post?.content.split("\n").map((text) => (<p>{text}</p>))}</div>
             {/* <div>{post?.updatedAt}</div> */}
             {/* <div>{post?.userId}</div> */}
           </div>
