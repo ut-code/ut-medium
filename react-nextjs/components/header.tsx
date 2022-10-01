@@ -27,8 +27,16 @@ export default function Header(props: {session: any, status: string}) {
         flex content-center items-center \
       ">
         <div className="flex-none">
-          <Image height={827 / 30} width={3957 / 30} src={UtcodeImage} alt="image" />
+          <Link href={{ pathname: "/" }}>
+            <a className=" flex content-center items-center">
+              <Image height={827 / 30} width={3957 / 30} src={UtcodeImage} alt="image" />
+              <span className="ml-2">
+                ut-medium(仮)
+              </span>
+            </a>
+          </Link>
         </div>
+        <span className="ml-2">{props.location}</span>
         <ShowLoginStatus className="ml-auto" session={props.session} status={props.status} />
         <div className="ml-2">
           <Link className="" href={{ pathname: "/loginPage" }}>

@@ -1,7 +1,9 @@
 import { useRouter } from 'next/router';
 import getData from '../../../components/getData';
 import ReturnTop from '../../../components/returnTop';
-
+import {format} from "date-fns";
+import Header from "../../../components/header";
+import { useSession } from 'next-auth/react';
 
 class Review{
   author: string = "";
@@ -12,55 +14,57 @@ class Review{
 const fetcher = (url: string) => fetch(url).then(r => r.json()).catch(err => console.log(err));
 
 function ListArticle(props: {id: number}) {
-	const {data: post, isLoading, isError} = getData<Post>('/v1/articles/id/' + props.id.toString());
+  const {data: post, isLoading, isError} = getData<Post>('/v1/articles/id/' + props.id.toString());
   return (
     <div>
-
-			{isLoading && <div>Loading...</div>}
-
-
-			<div className="grid grid-cols-2 divide-x">
+      {isLoading && <div>Loading...</div>}
+      <div className="grid grid-cols-2 divide-x m-2">
       <div key={post?.id}>
           <div>
-						{/* <div>賛成側意見</div><br/> */}
-            <div>{post?.title}</div>
-            <br></br>
-            <div>{post?.penName}</div>
-            <br></br>
-            <div>{post?.content}</div>
-						<br/>
-						<div>createdAt: {post?.createdAt}</div>
-						{/* <div>{post?.updatedAt}</div> */}
-						{/* <div>{post?.userId}</div> */}
-						<div>classification: {post?.classification}</div>
+            {/* <div>賛成側意見</div><br/> */}
+            <div className="text-2xl">
+              <span className="border-b-2 border-gray-500">
+                {post?.title}
+              </span>
+            </div>
+            <div className="ml-4 mt-2">
+              <div>
+                Author: {post?.penName}
+              </div>
+              <div>
+                createdAt: {post?.createdAt && format(new Date(post?.createdAt), "yyyy/M/d (E) H:mm:ss")}
+              </div>
+              <div>classification: {post?.classification}</div>
+            </div>
+            <div className="mt-4">{post?.content}</div>
+            {/* <div>{post?.updatedAt}</div> */}
+            {/* <div>{post?.userId}</div> */}
           </div>
-      <br></br>
       </div>
 
       {/* <div key={dataById?.id}>
           <div>
-						<div>反対側意見</div><br/>
+            <div>反対側意見</div><br/>
             <div>{dataById?.title}</div>
             <br></br>
             <div>{dataById?.author}</div>
             <br></br>
             <div>{dataById?.content}</div>
-						<br/>
-						<div>{dataById?.createdAt}</div>
-						<div>{dataById?.updatedAt}</div>
-						<div>{dataById?.userId}</div>
-						<div>{dataById?.classification}</div>
+            <br/>
+            <div>{dataById?.createdAt}</div>
+            <div>{dataById?.updatedAt}</div>
+            <div>{dataById?.userId}</div>
+            <div>{dataById?.classification}</div>
           </div><br/>
       </div> */}
-
-		</div>
+      </div>
     </div>
   );
 }
 
 async function deletePost(props: {id: string}) {
-	const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}` + '/v1/create/delete/' + props.id;
-	await fetch(url)
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}` + '/v1/create/delete/' + props.id;
+  await fetch(url)
 }
 
 const Home: React.FunctionComponent = () => {
@@ -70,16 +74,16 @@ const Home: React.FunctionComponent = () => {
   const { id } = router.query;
 
 
-		const handleClick = async (id: string) => {
-		await deletePost({id: id})
-		router.push('/')
-	}
+    const handleClick = async (id: string) => {
+    await deletePost({id: id})
+    router.push('/')
+  }
+
+  const { data: session, status } = useSession();
 
   return (
     <div>
-			<ReturnTop />
-
-			<br/>
+      <Header location="/ View Article" session={session} status={status}/>
 
       {typeof id === "string" && <ListArticle id={parseInt(id)} />}
       {/* <div>{article?.id}</div>
@@ -187,7 +191,20 @@ const Home: React.FunctionComponent = () => {
         {/* </div>
       </div> */}
 
-			{typeof id === "string" && <button onClick={() => {handleClick(id)}}><a>id: {id}を削除</a></button>}
+      <div className="ml-2 mt-4">
+        {typeof id === "string" &&
+          <button onClick={() => {handleClick(id)}}>
+            <a className="\
+            items-center justify-center rounded-md p-2 \
+            text-current hover:bg-red-100 \
+            border-2 border-red-500 \
+            focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white \
+            ">
+              この記事を削除
+            </a>
+          </button>
+        }
+      </div>
 
     </div>
   )
