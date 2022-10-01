@@ -25,6 +25,7 @@ export default function Header(props: {session: any, status: string}) {
       <div className="\
         fixed top-0 left-0 right-0 p-2 h-12 \
         flex content-center items-center \
+        bg-sky-50/90 \
       ">
         <div className="flex-none">
           <Link href={{ pathname: "/" }}>
@@ -51,7 +52,7 @@ export default function Header(props: {session: any, status: string}) {
         </div>
       </div>
 
-      <div className="h-12" />
+      <div className="h-14" />
     </>
   );
 }
