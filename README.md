@@ -1,4 +1,4 @@
-https://react-nextjs-cyan.vercel.app/
+https://ut-medium-xi.vercel.app/
 
 frontendはreactとnextjs
 vercel
