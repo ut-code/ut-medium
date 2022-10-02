@@ -19,7 +19,7 @@ function ListArticle(props: {id: number}) {
 			{isLoading && <div>Loading...</div>}
 
 
-			<div className="grid grid-cols-2 divide-x">
+			<div key = {post?.id} className="grid grid-cols-2 divide-x">
       <div key={post?.id}>
           <div>
 						{/* <div>賛成側意見</div><br/> */}
