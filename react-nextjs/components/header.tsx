@@ -18,7 +18,7 @@ function ShowLoginStatus(props: { session: any, status: string, className:string
   )
 }
 
-export default function Header(props: {session: any, status: string}) {
+export default function Header(props: {session: any, status: string, location: string | null}) {
 
   return (
     <>
@@ -37,7 +37,7 @@ export default function Header(props: {session: any, status: string}) {
             </a>
           </Link>
         </div>
-        <span className="ml-2">{props.location}</span>
+        {props.location && <span className="ml-2">{props.location}</span>}
         <ShowLoginStatus className="ml-auto" session={props.session} status={props.status} />
         <div className="ml-2">
           <Link className="" href={{ pathname: "/loginPage" }}>
