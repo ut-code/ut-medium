@@ -4,6 +4,7 @@ import 'draft-js/dist/Draft.css';
 import { useSession } from 'next-auth/react';
 import CreateArticle from '../../components/createArticle';
 import ReturnTop from '../../components/returnTop';
+import Header from "../../components/header";
 
 // class Article{
 //   title: string = "";
@@ -94,9 +95,8 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <ReturnTop />
+    <Header location="/ Create Article" session={session} status={status}/>
 
-			<br></br>
 			{/* <MyEditor /> */}
       {/* {ContactForm} */}
 			{/* {"以下はreact-hook-formを使って作成したコンポーネント"} */}
