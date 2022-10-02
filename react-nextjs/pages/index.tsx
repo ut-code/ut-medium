@@ -60,6 +60,7 @@ function ClassificationSelect(props){
     ">
       {
         classificationDefinition.map((c) => (
+					<div key={c.id}>
           <a className="flex-1">
             <div className={
               props.classification === c.id ?
@@ -70,6 +71,7 @@ function ClassificationSelect(props){
               <button className="w-full" onClick={() => {props.setClassification(c.id)}}>{c.label}</button>
             </div>
           </a>
+					</div>
         ))
       }
     </div>
@@ -84,7 +86,7 @@ const Home: NextPage = () => {
   console.log(session);
   return (
     <>
-      <Header session={session} status={status}/>
+      <Header session={session} status={status} location={''}/>
 
       <ClassificationSelect classification={classification} setClassification={setClassification} />
 
