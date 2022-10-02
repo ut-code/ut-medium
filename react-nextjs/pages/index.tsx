@@ -41,7 +41,7 @@ function ListArticles(props: {classification: string}) {
   );
 }
 
-function ClassificationSelect(props){
+function ClassificationSelect(props: any){
   const classificationDefinition = [
     {id: "all", label:"主要"},
     {id: "national", label:"国内"},
@@ -60,7 +60,7 @@ function ClassificationSelect(props){
     ">
       {
         classificationDefinition.map((c) => (
-          <a className="flex-1">
+          <div key={c.id} className="flex-1">
             <div className={
               props.classification === c.id ?
                 "bg-sky-100 hover:bg-sky-200 rounded-md mx-1"
@@ -69,7 +69,7 @@ function ClassificationSelect(props){
             }>
               <button className="w-full" onClick={() => {props.setClassification(c.id)}}>{c.label}</button>
             </div>
-          </a>
+          </div>
         ))
       }
     </div>
@@ -84,7 +84,7 @@ const Home: NextPage = () => {
   console.log(session);
   return (
     <>
-      <Header session={session} status={status}/>
+      <Header session={session} status={status} location={""}/>
 
       <ClassificationSelect classification={classification} setClassification={setClassification} />
 
