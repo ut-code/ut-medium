@@ -82,7 +82,7 @@ const Home: NextPage = () => {
         <a>Create Article</a>
       </Link><br/><br/></>}
 
-			{status==="authenticated" && session?.user?.email?.endsWith('1234hakataramen@g.ecc.u-tokyo.ac.jp') &&
+			{status==="authenticated" && session?.user?.email?.endsWith('@g.ecc.u-tokyo.ac.jp') &&
 			<Link href={{pathname: '/allData'}} >
 				<a>Show all data</a>
 			</Link>}

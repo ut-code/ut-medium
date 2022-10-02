@@ -59,8 +59,8 @@ function ListArticle(props: {id: number}) {
 }
 
 async function deletePost(props: {id: string}) {
-	const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}` + '/v1/create/delete/' + props.id;
-	await fetch(url)
+	const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}` + '/v1/articles/' + props.id;
+	await fetch(url, {method: 'DELETE'});
 }
 
 const Home: React.FunctionComponent = () => {

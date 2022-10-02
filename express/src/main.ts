@@ -137,6 +137,17 @@ app.get('/v1/create/delete/:id', async(req: express.Request, res: express.Respon
 	}
 })
 
+app.delete('/v1/articles/:id', async(req: express.Request, res: express.Response) => {
+	const {id} = req.params;
+	if (typeof id === 'string') {
+		let post = await client.post.delete({
+			where: {
+				id: parseInt(id, 10)
+			}
+		})
+	res.send(`${post} delete successfully`)}
+})
+
 app.post('/v1/create/user', async(req: express.Request, res: express.Response) => {
 	const {name, email} = req.body;
 	console.log('/v1/create/user')

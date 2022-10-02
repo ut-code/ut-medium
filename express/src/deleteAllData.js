@@ -42,24 +42,27 @@ function main() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, client.user.deleteMany()];
+                case 0: return [4 /*yield*/, client.post.deleteMany()];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, client.post.deleteMany()];
+                    return [4 /*yield*/, client.account.deleteMany()];
                 case 2:
                     _a.sent();
-                    return [4 /*yield*/, client.account.deleteMany()];
+                    return [4 /*yield*/, client.session.deleteMany()];
                 case 3:
                     _a.sent();
-                    return [4 /*yield*/, client.session.deleteMany()];
+                    return [4 /*yield*/, client.verificationToken.deleteMany()];
                 case 4:
                     _a.sent();
-                    return [4 /*yield*/, client.verificationToken.deleteMany()];
+                    return [4 /*yield*/, client.post.deleteMany()];
                 case 5:
                     _a.sent();
-                    return [4 /*yield*/, client.post.deleteMany()];
+                    return [4 /*yield*/, client.user.deleteMany()
+                        // await client.comment.deleteMany()
+                    ];
                 case 6:
                     _a.sent();
+                    // await client.comment.deleteMany()
                     console.log("deleted all");
                     return [2 /*return*/];
             }
