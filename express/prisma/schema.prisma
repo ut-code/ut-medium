@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,41 +8,39 @@ datasource db {
 }
 
 model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
+  id               String  @id @default(cuid())
+  userId           String
+  type             String
+  provider         String
+  provierAccountId String
+  refresh_token    String?
+  access_token     String?
+  expires_at       Int?
+  token_type       String?
+  scope            String?
+  id_token         String?
+  session_state    String?
+  user             User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Session {
   id           String   @id @default(cuid())
-  sessionToken String   @unique
   userId       String
   expires      DateTime
+  sessionToken String   @unique
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
+  name          String
+  email         String    @unique
+  id            String    @id @unique @default(cuid())
+  role          Role      @default(USER)
   emailVerified DateTime?
   image         String?
   accounts      Account[]
-  sessions      Session[]
   posts         Post[]
+  sessions      Session[]
 }
 
 model VerificationToken {
@@ -59,38 +54,37 @@ model VerificationToken {
 model Post {
   id             Int      @id @unique @default(autoincrement())
   title          String
-  penName        String   @default("anonymous")
-  user           User     @relation(fields: [userId], references: [id])
-  userId         String
-  classification String   @default("all")
-  content        String   @default("")
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+  classification String   @default("all")
+  content        String   @default("")
+  penName        String   @default("anonymous")
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  good           Int      @default(0)
+  bad            Int      @default(0)
 }
 
-// enum Role {
-//   USER
-//   ADMIN
-// }
+model Profile {
+  id        Int      @id @unique @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String   @unique
+}
 
-// model Profile {
-//   id        Int      @id @unique @default(autoincrement())
-//   content   String
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-//   user      User     @relation(fields: [userId], references: [id])
-//   userId    String   @unique
-// }
+enum Role {
+  USER
+  ADMIN
+}
 
-// const [reviews, setReviews] = useState<Review[]>([
-//   {
-//     author: "龍之介",
-//     nameDisplay: true,
-//     content: "2行目の「郊外のぎらぎらひかる草の波」の出典を明記してください"
-//   },
-//   {
-//     author: "諭吉",
-//     nameDisplay: false,
-//     content: "「イーハトーヴォ」が分からないので説明してください。"
-//   }
-// ]);
+model Comment {
+  id        Int      @id @unique @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  postId    Int
+  content   String
+  good      Int      @default(0)
+  bad       Int      @default(0)
+  penName   String   @default("anonymous")
+}

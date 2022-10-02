@@ -1,9 +1,8 @@
+import { format } from "date-fns";
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import getData from '../../../components/getData';
-import ReturnTop from '../../../components/returnTop';
-import {format} from "date-fns";
 import Header from "../../../components/header";
-import { useSession } from 'next-auth/react';
 
 class Review{
   author: string = "";
@@ -36,7 +35,7 @@ function ListArticle(props: {id: number}) {
               </div>
               <div>classification: {post?.classification}</div>
             </div>
-            <div className="mt-4">{post?.content.split("\n").map((text) => (<p>{text}</p>))}</div>
+            <div className="mt-4">{post?.content.split("\n").map((text) => (<div key={text}><p>{text}</p></div>))}</div>
             {/* <div>{post?.updatedAt}</div> */}
             {/* <div>{post?.userId}</div> */}
           </div>
@@ -63,8 +62,8 @@ function ListArticle(props: {id: number}) {
 }
 
 async function deletePost(props: {id: string}) {
-  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}` + '/v1/create/delete/' + props.id;
-  await fetch(url)
+	const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}` + '/v1/articles/' + props.id;
+	await fetch(url, {method: 'DELETE'});
 }
 
 const Home: React.FunctionComponent = () => {

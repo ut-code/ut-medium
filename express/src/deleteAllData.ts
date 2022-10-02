@@ -2,12 +2,16 @@ import { PrismaClient } from '@prisma/client'
 const client = new PrismaClient()
 
 async function main() {
-	await client.user.deleteMany()
+
 	await client.post.deleteMany()
 	await client.account.deleteMany()
 	await client.session.deleteMany()
+	// await client.comment()
+	await client.profile.deleteMany()
 	await client.verificationToken.deleteMany()
-	await client.post.deleteMany()
+	await client.user.deleteMany()
+
+	// await client.comment.deleteMany()
 
 	console.log("deleted all")
 }
