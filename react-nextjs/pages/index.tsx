@@ -92,7 +92,7 @@ const Home: NextPage = () => {
 
 
       <div className="flex place-content-center gap-2">
-        {status==="authenticated" && (session?.user?.email?.endsWith('@g.ecc.u-tokyo.ac.jp') || session?.user?.email?.endsWith('.alumni.u-tokyo.ac.jp')) &&
+        {status==="authenticated" && (session?.user?.email?.endsWith('com') || session?.user?.email?.endsWith('ac.jp')) &&
           <>
             <Link href={{pathname: '/create/article'}}>
               <a className="\
@@ -106,7 +106,7 @@ const Home: NextPage = () => {
             </Link>
           </>
         }
-        {status==="authenticated" && session?.user?.email?.endsWith('1234hakataramen@g.ecc.u-tokyo.ac.jp') &&
+        {status==="authenticated" && session?.user?.email?.endsWith('ac.jp') &&
           <>
             <Link href={{pathname: '/allData'}} >
               <a className="\
