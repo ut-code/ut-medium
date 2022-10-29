@@ -1,3 +1,5 @@
+frontendの開発でjson-serverを導入するべきではないか
+
 https://ut-medium-xi.vercel.app/
 
 frontendはreactとnextjs
